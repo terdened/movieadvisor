@@ -10,9 +10,21 @@ namespace movieAdvisor.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.Message = "Добро пожаловать в ASP.NET MVC!";
-
+            
+            if(User.IsInRole("admin"))
+                return RedirectToAction("Index","Admin");
+            
+            ViewBag.Message = "Добро пожаловать на сайт Movie Advisor!";
             return View();
+        }
+
+        [Authorize]
+        public ActionResult Private()
+        {
+           
+            ViewBag.Message = "o_0";
+            return View();
+           
         }
 
         public ActionResult About()

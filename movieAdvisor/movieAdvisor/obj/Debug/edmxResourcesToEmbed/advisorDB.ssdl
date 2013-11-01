@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MOVIEADVISORModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="MOVIEADVISORModelStoreContainer">
+    <EntitySet Name="MOVIES" EntityType="MOVIEADVISORModel.Store.MOVIES" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PERSONS" EntityType="MOVIEADVISORModel.Store.PERSONS" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="USERS" EntityType="MOVIEADVISORModel.Store.USERS" store:Type="Tables" Schema="dbo" />
+  </EntityContainer>
+  <EntityType Name="MOVIES">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="TITLE" Type="nchar" Nullable="false" MaxLength="40" />
+    <Property Name="DESCRIPTION" Type="nchar" MaxLength="1500" />
+    <Property Name="YEAR" Type="int" />
+  </EntityType>
+  <EntityType Name="PERSONS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="NAME" Type="nchar" Nullable="false" MaxLength="50" />
+    <Property Name="DESCRIPTION" Type="nchar" MaxLength="1000" />
+  </EntityType>
+  <EntityType Name="USERS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="USERNAME" Type="nchar" Nullable="false" MaxLength="30" />
+    <Property Name="PASSWORD" Type="nchar" Nullable="false" MaxLength="50" />
+    <Property Name="ROLES" Type="nchar" Nullable="false" MaxLength="10" />
+    <Property Name="EMAIL" Type="nchar" MaxLength="40" />
+  </EntityType>
+</Schema>

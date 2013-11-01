@@ -20,30 +20,44 @@ namespace movieAdvisor.Controllers
             return View();
         }
 
+
+        public ActionResult Login()
+        {
+            return RedirectToAction("LogOn");
+        }
+
         //
         // POST: /Account/LogOn
 
         [HttpPost]
-        public ActionResult LogOn(LogOnModel model, string returnUrl)
+        public ActionResult LogOn(USERS model, string returnUrl)
         {
             if (ModelState.IsValid)
             {
-                if (Membership.ValidateUser(model.UserName, model.Password))
+                using (MOVIEADVISOREntities2 entities = new MOVIEADVISOREntities2())
                 {
-                    FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
-                    if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
-                        && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
+                    bool userValid = entities.USERS.Any(user => user.USERNAME == model.USERNAME && user.PASSWORD == model.PASSWORD);
+
+                    if (userValid)
                     {
-                        return Redirect(returnUrl);
+                        FormsAuthentication.SetAuthCookie(model.USERNAME, false);
+                        if(!Roles.IsUserInRole(model.USERNAME, entities.USERS.Where(user => user.USERNAME == model.USERNAME && user.PASSWORD == model.PASSWORD).FirstOrDefault().ROLES))
+                            Roles.AddUserToRole(model.USERNAME, entities.USERS.Where(user => user.USERNAME == model.USERNAME && user.PASSWORD == model.PASSWORD).FirstOrDefault().ROLES);
+                        
+                        if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
+                            && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
+                        {
+                            return Redirect(returnUrl);
+                        }
+                        else
+                        {
+                            return RedirectToAction("Index", "Home");
+                        }
                     }
                     else
                     {
-                        return RedirectToAction("Index", "Home");
+                        ModelState.AddModelError("", "Имя пользователя или пароль указаны неверно.");
                     }
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Имя пользователя или пароль указаны неверно.");
                 }
             }
 
@@ -78,17 +92,51 @@ namespace movieAdvisor.Controllers
             if (ModelState.IsValid)
             {
                 // Попытка зарегистрировать пользователя
-                MembershipCreateStatus createStatus;
-                Membership.CreateUser(model.UserName, model.Password, model.Email, null, null, true, null, out createStatus);
+                using (MOVIEADVISOREntities2 entities = new MOVIEADVISOREntities2())
+                {
+                    if (model.Password == model.ConfirmPassword)
+                    {
+                        USERS tempUser = new USERS();
 
-                if (createStatus == MembershipCreateStatus.Success)
-                {
-                    FormsAuthentication.SetAuthCookie(model.UserName, false /* createPersistentCookie */);
-                    return RedirectToAction("Index", "Home");
-                }
-                else
-                {
-                    ModelState.AddModelError("", ErrorCodeToString(createStatus));
+                        if (entities.USERS.Count() > 0)
+                        {
+                            int tempId = entities.USERS.OrderByDescending(u=>u.ID).FirstOrDefault().ID;
+                            tempUser.ID = tempId + 1;
+                        }
+                        else
+                            tempUser.ID = 0;
+
+                        tempUser.USERNAME = model.UserName;
+                        tempUser.PASSWORD = model.Password;
+                        tempUser.ROLES = "user";
+                        tempUser.EMAIL = model.Email;
+
+                        entities.USERS.AddObject(tempUser);
+                        int createStatus;
+                        
+                        try
+                        {
+                            createStatus = entities.SaveChanges();
+                        }
+                        catch
+                        {
+                            createStatus = -1;
+                        }
+
+                        if (createStatus == 1)
+                        {
+                            FormsAuthentication.SetAuthCookie(model.UserName, false /* createPersistentCookie */);
+                            return RedirectToAction("Index", "Home");
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("", createStatus.ToString());
+                        }
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Введеные пароли не совпадают.");
+                    }
                 }
             }
 
@@ -117,18 +165,27 @@ namespace movieAdvisor.Controllers
 
                 // При некоторых сценариях сбоя операция смены пароля ChangePassword вызывает исключение,
                 // а не возвращает значение false (ложь).
-                bool changePasswordSucceeded;
+                int changePasswordSucceeded;
                 try
                 {
-                    MembershipUser currentUser = Membership.GetUser(User.Identity.Name, true /* userIsOnline */);
-                    changePasswordSucceeded = currentUser.ChangePassword(model.OldPassword, model.NewPassword);
+                    using (MOVIEADVISOREntities2 entities = new MOVIEADVISOREntities2())
+                    {
+
+                        if (entities.USERS.Where(u => u.USERNAME == User.Identity.Name).Where(u => u.PASSWORD == model.OldPassword).ToList().Count > 0)
+                        {
+                            entities.USERS.Where(u => u.USERNAME == User.Identity.Name).First().PASSWORD = model.NewPassword;
+                            changePasswordSucceeded = entities.SaveChanges();
+                        }
+                        else
+                            changePasswordSucceeded = -1;
+                    }
                 }
                 catch (Exception)
                 {
-                    changePasswordSucceeded = false;
+                    changePasswordSucceeded = -1;
                 }
 
-                if (changePasswordSucceeded)
+                if (changePasswordSucceeded == 1)
                 {
                     return RedirectToAction("ChangePasswordSuccess");
                 }

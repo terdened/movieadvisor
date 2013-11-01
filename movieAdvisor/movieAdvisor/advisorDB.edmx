@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="MOVIEADVISORModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="MOVIEADVISORModelStoreContainer">
+          <EntitySet Name="MOVIES" EntityType="MOVIEADVISORModel.Store.MOVIES" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PERSONS" EntityType="MOVIEADVISORModel.Store.PERSONS" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="USERS" EntityType="MOVIEADVISORModel.Store.USERS" store:Type="Tables" Schema="dbo" />
+        </EntityContainer>
+        <EntityType Name="MOVIES">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="TITLE" Type="nchar" Nullable="false" MaxLength="40" />
+          <Property Name="DESCRIPTION" Type="nchar" MaxLength="1500" />
+          <Property Name="YEAR" Type="int" />
+        </EntityType>
+        <EntityType Name="PERSONS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="NAME" Type="nchar" Nullable="false" MaxLength="50" />
+          <Property Name="DESCRIPTION" Type="nchar" MaxLength="1000" />
+        </EntityType>
+        <EntityType Name="USERS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="USERNAME" Type="nchar" Nullable="false" MaxLength="30" />
+          <Property Name="PASSWORD" Type="nchar" Nullable="false" MaxLength="50" />
+          <Property Name="ROLES" Type="nchar" Nullable="false" MaxLength="10" />
+          <Property Name="EMAIL" Type="nchar" MaxLength="40" />
+        </EntityType>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MOVIEADVISORModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="MOVIEADVISOREntities2" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="MOVIES" EntityType="MOVIEADVISORModel.MOVIES" />
+          <EntitySet Name="PERSONS" EntityType="MOVIEADVISORModel.PERSONS" />
+          <EntitySet Name="USERS" EntityType="MOVIEADVISORModel.USERS" />
+        </EntityContainer>
+        <EntityType Name="MOVIES">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="TITLE" Type="String" Nullable="false" MaxLength="40" Unicode="true" FixedLength="true" />
+          <Property Name="DESCRIPTION" Type="String" MaxLength="1500" Unicode="true" FixedLength="true" />
+          <Property Name="YEAR" Type="Int32" />
+        </EntityType>
+        <EntityType Name="PERSONS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="NAME" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="true" />
+          <Property Name="DESCRIPTION" Type="String" MaxLength="1000" Unicode="true" FixedLength="true" />
+        </EntityType>
+        <EntityType Name="USERS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="USERNAME" Type="String" Nullable="false" MaxLength="30" Unicode="true" FixedLength="true" />
+          <Property Name="PASSWORD" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="true" />
+          <Property Name="ROLES" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="true" />
+          <Property Name="EMAIL" Type="String" MaxLength="40" Unicode="true" FixedLength="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MOVIEADVISORModelStoreContainer" CdmEntityContainer="MOVIEADVISOREntities2">
+          <EntitySetMapping Name="MOVIES">
+            <EntityTypeMapping TypeName="MOVIEADVISORModel.MOVIES">
+              <MappingFragment StoreEntitySet="MOVIES">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+                <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+                <ScalarProperty Name="YEAR" ColumnName="YEAR" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PERSONS">
+            <EntityTypeMapping TypeName="MOVIEADVISORModel.PERSONS">
+              <MappingFragment StoreEntitySet="PERSONS">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+                <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USERS">
+            <EntityTypeMapping TypeName="MOVIEADVISORModel.USERS">
+              <MappingFragment StoreEntitySet="USERS">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="USERNAME" ColumnName="USERNAME" />
+                <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+                <ScalarProperty Name="ROLES" ColumnName="ROLES" />
+                <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="advisorDB">
+        <EntityTypeShape EntityType="MOVIEADVISORModel.MOVIES" Width="1.5" PointX="0.75" PointY="0.75" Height="1.787985026041667" IsExpanded="true" />
+        <EntityTypeShape EntityType="MOVIEADVISORModel.PERSONS" Width="1.5" PointX="2.75" PointY="0.75" Height="1.5956835937499996" IsExpanded="true" />
+        <EntityTypeShape EntityType="MOVIEADVISORModel.USERS" Width="1.5" PointX="0.75" PointY="3.75" Height="1.9802864583333322" IsExpanded="true" />
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>
