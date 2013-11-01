@@ -1,0 +1,7 @@
+C:\Users\terde_000\Coursework\movieadvisor\movieAdvisor\movieAdvisor\bin\movieAdvisor.dll
+C:\Users\terde_000\Coursework\movieadvisor\movieAdvisor\movieAdvisor\bin\movieAdvisor.pdb
+C:\Users\terde_000\Coursework\movieadvisor\movieAdvisor\movieAdvisor\bin\EntityFramework.dll
+C:\Users\terde_000\Coursework\movieadvisor\movieAdvisor\movieAdvisor\bin\EntityFramework.xml
+C:\Users\terde_000\Coursework\movieadvisor\movieAdvisor\movieAdvisor\obj\Debug\movieAdvisor.csprojResolveAssemblyReference.cache
+C:\Users\terde_000\Coursework\movieadvisor\movieAdvisor\movieAdvisor\obj\Debug\movieAdvisor.dll
+C:\Users\terde_000\Coursework\movieadvisor\movieAdvisor\movieAdvisor\obj\Debug\movieAdvisor.pdb
