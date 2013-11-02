@@ -74,6 +74,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MoviesController.cs" />
+    <Compile Include="Controllers\PersonsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -81,6 +82,9 @@
     <Compile Include="Models\MovieShow.cs" />
     <Compile Include="Models\MoviesListItem.cs" />
     <Compile Include="Models\Person.cs" />
+    <Compile Include="Models\PersonsListItem.cs" />
+    <Compile Include="Models\PersonShow.cs" />
+    <Compile Include="Models\Movie.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -182,6 +186,15 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>adviserDB.Designer.cs</LastGenOutput>
     </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Movies\Find.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Persons\Find.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Persons\Show.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

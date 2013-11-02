@@ -49,6 +49,29 @@ namespace movieAdvisor.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        public ActionResult Find()
+        {
+            List<MoviesListItem> model = new List<MoviesListItem>();
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Find(string keyWord)
+        {
+            MOVIEADVISOREntities5 entities = new MOVIEADVISOREntities5();
+            List<MOVIES> tempMoviesHolder = entities.MOVIES.ToList();
+            List<MoviesListItem> model = new List<MoviesListItem>();
+
+            foreach (var movie in tempMoviesHolder)
+            {
+                if (movie.TITLE.ToLower().IndexOf(keyWord.ToLower())>-1)
+                    model.Add(new MoviesListItem(movie));
+            }
+
+            return View(model);
+        }
+
         public ActionResult AddComment(string commentText, int movieId)
         {
             MOVIEADVISOREntities5 entities = new MOVIEADVISOREntities5();

@@ -1,31 +1,14 @@
-﻿@model movieAdvisor.Models.MovieShow
+﻿@model movieAdvisor.Models.PersonShow
 
 @{
-    ViewBag.Title = Model.movie.TITLE;
+    ViewBag.Title = Model.person.NAME;
 }
-
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('poster').click(function () {
-            echo('hi');
-            var o = $(this).parent();
-            var url = o.find('img').attr('src');
-            var html = '<a href="#" class="clone"><img src="' + url + '" /></a>'
-            o.append(html);
-            o = o.find('.clone');
-            o.animate({ width: '200%', height: '200%' });
-            o.click(function () {
-                $(this).remove();
-            });
-        });
-    });
-</script>
 
 <table width="100%">
         <tr>
             <td width="100%" align="center">
                 <div class="editor-label">
-                    <h2>@Model.movie.TITLE</h2>
+                    <h2>@Model.person.NAME</h2>
                 </div>
             </td>
         </tr>
@@ -48,14 +31,14 @@
                                     Описание:
                                 </p>
                                 <p>
-                                    @Model.movie.DESCRIPTION
+                                    @Model.person.DESCRIPTION
                                 </p>
                             </div>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                        Кадры из фильма:
+                        Фото:
                         </td>
                     </tr>
                     <tr valign="top">
@@ -112,12 +95,12 @@
                             @{
                                 if (User.Identity.IsAuthenticated)
                                 {
-                                    using (Html.BeginForm("AddComment", "Movies", FormMethod.Get ,new { width = "100%" }))
+                                    using (Html.BeginForm("AddComment", "Persons", FormMethod.Get ,new { width = "100%" }))
                                     {
                                         @:Оставить отзыв:
                                         <textarea rows="5" id = "commentText" name="commentText" style="width:100%"></textarea>
                                         <br />
-                                        <input type=hidden id = "movieId" name="movieId" value=@(Model.movie.ID) />
+                                        <input type=hidden id = "personId" name="personId" value=@(Model.person.ID) />
                                         <input type=submit title="Оставить" align="right" />
                                     }
                                 }
@@ -133,57 +116,33 @@
             <td width="10%" align="center" valign="top">
                 <div class="editor-persons">
                     @{
-                        if (Model.directorsList.Count > 1)
+                        if (Model.moviesList.Count > 1)
                         {
                             <div class="editor-label">
-                                 Режиссеры:
+                                 Фильмы:
                             </div>
                         }
                         else
-                            if (Model.directorsList.Count > 0)
-                            {
-                                <div class="editor-label">
-                                     Режиссер:
-                                </div>
-                            }
+                        if (Model.moviesList.Count > 0)
+                        {
+                            <div class="editor-label">
+                                    Фильм:
+                            </div>
+                        }
 
-                        foreach (var direct in Model.directorsList)
+                        foreach (var movie in Model.moviesList)
                         {
                             <div class="editor-poster" >
                                 @{
-                                    @:<img id="person" src="@Url.Content("~/Uploads/" + direct.picture.PATH)"/ width="90" height="130" alt="@direct.picture.TITLE">
+                                    @:<img id="person" src="@Url.Content("~/Uploads/" + movie.picture.PATH)"/ width="90" height="130" alt="@movie.picture.TITLE">
                                 }
                             </div>
                             <div class="editor-label">
-                                 @Html.ActionLink(direct.person.NAME, "Show", "Persons", new { id = direct.person.ID }, null)
+                                 @Html.ActionLink(movie.movie.TITLE, "Show", "Movies", new { id = movie.movie.ID }, null)
                             </div>
                         }
 
-                        if (Model.actorsList.Count > 1)
-                        {
-                            <div class="editor-label">
-                                 Актеры:
-                            </div>
-                        }
-                        else
-                            if (Model.actorsList.Count > 0)
-                            {
-                            <div class="editor-label">
-                                 Актер:
-                            </div>
-                            }
-
-                        foreach (var actor in Model.actorsList)
-                        {
-                            <div class="editor-poster" >
-                                @{
-                                    @:<img id="person" src="@Url.Content("~/Uploads/" + actor.picture.PATH)"/ width="90" height="130" alt="@actor.picture.TITLE">
-                                }
-                            </div>
-                            <div class="editor-label">
-                                @Html.ActionLink(actor.person.NAME, "Show", "Persons", new { id = actor.person.ID }, null)
-                            </div>
-                        }
+                       
                     }
                 </div>
             </td>

@@ -1,10 +1,17 @@
 ﻿@model List<movieAdvisor.Models.MoviesListItem>
 
 @{
-    ViewBag.Title = "Последние добавления";
+    ViewBag.Title = "Поиск фильмов";
 }
 
-<h2>Последние добавления</h2>
+<h2>Поиск фильмов</h2>
+
+@using(Html.BeginForm("Find","Movies",FormMethod.Post))
+{
+    @:Поиск
+    <input type="text" name="keyWord" id="keyWord" />
+    <input type="submit" />
+}
 
 @foreach (var movie in Model)
 {
@@ -21,7 +28,7 @@
         <tr>
             <td width="20%" align="center">
                 <div class="editor-poster">
-                    <img src="@Url.Content("~/Uploads/"+movie.poster)"/ width="185" height="273" alt="@movie.alt">
+                    <img src="@Url.Content("~/Uploads/" + movie.poster)"/ width="185" height="273" alt="@movie.alt">
                 </div>
             </td>
             <td width="80%" valign="top">
