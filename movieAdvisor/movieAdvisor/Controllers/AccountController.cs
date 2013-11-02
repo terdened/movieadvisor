@@ -34,7 +34,7 @@ namespace movieAdvisor.Controllers
         {
             if (ModelState.IsValid)
             {
-                using (MOVIEADVISOREntities2 entities = new MOVIEADVISOREntities2())
+                using (MOVIEADVISOREntities5 entities = new MOVIEADVISOREntities5())
                 {
                     bool userValid = entities.USERS.Any(user => user.USERNAME == model.USERNAME && user.PASSWORD == model.PASSWORD);
 
@@ -92,7 +92,7 @@ namespace movieAdvisor.Controllers
             if (ModelState.IsValid)
             {
                 // Попытка зарегистрировать пользователя
-                using (MOVIEADVISOREntities2 entities = new MOVIEADVISOREntities2())
+                using (MOVIEADVISOREntities5 entities = new MOVIEADVISOREntities5())
                 {
                     if (model.Password == model.ConfirmPassword)
                     {
@@ -168,7 +168,7 @@ namespace movieAdvisor.Controllers
                 int changePasswordSucceeded;
                 try
                 {
-                    using (MOVIEADVISOREntities2 entities = new MOVIEADVISOREntities2())
+                    using (MOVIEADVISOREntities5 entities = new MOVIEADVISOREntities5())
                     {
 
                         if (entities.USERS.Where(u => u.USERNAME == User.Identity.Name).Where(u => u.PASSWORD == model.OldPassword).ToList().Count > 0)

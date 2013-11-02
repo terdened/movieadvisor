@@ -1,0 +1,41 @@
+﻿@model List<movieAdvisor.Models.MoviesListItem>
+
+@{
+    ViewBag.Title = "Последние добавления";
+}
+
+<h2>Последние добавления</h2>
+
+@foreach (var movie in Model)
+{
+    <table width="100%">
+        <tr>
+            <td width="100%" align="center">
+                <div class="editor-label">
+                    @Html.ActionLink(movie.movie.TITLE, "Show", new { id = movie.movie.ID })
+                </div>
+            </td>
+        </tr>
+    </table>
+    <table width="100%">
+        <tr>
+            <td width="20%" align="center">
+                <div class="editor-poster">
+                    <img src="@Url.Content("~/Uploads/"+movie.poster)"/ width="185" height="273" alt="@movie.alt">
+                </div>
+            </td>
+            <td width="80%">
+                <div class="editor-description">
+                    <p>
+                        Описание:
+                    </p>
+                    <p>
+                        @movie.movie.DESCRIPTION
+                    </p>
+                </div>
+            </td>
+        </tr>
+    </table>
+}
+
+

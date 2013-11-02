@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="MOVIEADVISORModelStoreContainer" CdmEntityContainer="MOVIEADVISOREntities5">
+    <EntitySetMapping Name="GENRES">
+      <EntityTypeMapping TypeName="MOVIEADVISORModel.GENRES">
+        <MappingFragment StoreEntitySet="GENRES">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MOVIES">
+      <EntityTypeMapping TypeName="MOVIEADVISORModel.MOVIES">
+        <MappingFragment StoreEntitySet="MOVIES">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+          <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+          <ScalarProperty Name="YEAR" ColumnName="YEAR" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MOVIES_COMMENTS">
+      <EntityTypeMapping TypeName="MOVIEADVISORModel.MOVIES_COMMENTS">
+        <MappingFragment StoreEntitySet="MOVIES_COMMENTS">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TEXT" ColumnName="TEXT" />
+          <ScalarProperty Name="MARK" ColumnName="MARK" />
+          <ScalarProperty Name="PREV_COMMENT_ID" ColumnName="PREV_COMMENT_ID" />
+          <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+          <ScalarProperty Name="MOVIE_ID" ColumnName="MOVIE_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MOVIES_PERSONS_ROLES">
+      <EntityTypeMapping TypeName="MOVIEADVISORModel.MOVIES_PERSONS_ROLES">
+        <MappingFragment StoreEntitySet="MOVIES_PERSONS_ROLES">
+          <ScalarProperty Name="MOVIE_ID" ColumnName="MOVIE_ID" />
+          <ScalarProperty Name="PERSON_ID" ColumnName="PERSON_ID" />
+          <ScalarProperty Name="ROLE_ID" ColumnName="ROLE_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PERSONS">
+      <EntityTypeMapping TypeName="MOVIEADVISORModel.PERSONS">
+        <MappingFragment StoreEntitySet="PERSONS">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+          <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PERSONS_COMMENTS">
+      <EntityTypeMapping TypeName="MOVIEADVISORModel.PERSONS_COMMENTS">
+        <MappingFragment StoreEntitySet="PERSONS_COMMENTS">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TEXT" ColumnName="TEXT" />
+          <ScalarProperty Name="MARK" ColumnName="MARK" />
+          <ScalarProperty Name="PREV_COMMENT_ID" ColumnName="PREV_COMMENT_ID" />
+          <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+          <ScalarProperty Name="PERSON_ID" ColumnName="PERSON_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PICTURES">
+      <EntityTypeMapping TypeName="MOVIEADVISORModel.PICTURES">
+        <MappingFragment StoreEntitySet="PICTURES">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+          <ScalarProperty Name="PATH" ColumnName="PATH" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PICTURES_MOVIES">
+      <EntityTypeMapping TypeName="MOVIEADVISORModel.PICTURES_MOVIES">
+        <MappingFragment StoreEntitySet="PICTURES_MOVIES">
+          <ScalarProperty Name="MOVIE_ID" ColumnName="MOVIE_ID" />
+          <ScalarProperty Name="PICTURES_ID" ColumnName="PICTURES_ID" />
+          <ScalarProperty Name="IS_POSTER" ColumnName="IS_POSTER" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PICTURES_PERSONS">
+      <EntityTypeMapping TypeName="MOVIEADVISORModel.PICTURES_PERSONS">
+        <MappingFragment StoreEntitySet="PICTURES_PERSONS">
+          <ScalarProperty Name="PERSON_ID" ColumnName="PERSON_ID" />
+          <ScalarProperty Name="PICTURE_ID" ColumnName="PICTURE_ID" />
+          <ScalarProperty Name="IS_POSTER" ColumnName="IS_POSTER" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ROLES">
+      <EntityTypeMapping TypeName="MOVIEADVISORModel.ROLES">
+        <MappingFragment StoreEntitySet="ROLES">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="USERS">
+      <EntityTypeMapping TypeName="MOVIEADVISORModel.USERS">
+        <MappingFragment StoreEntitySet="USERS">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="USERNAME" ColumnName="USERNAME" />
+          <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+          <ScalarProperty Name="ROLES" ColumnName="ROLES" />
+          <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="MOVIES_GENRES" TypeName="MOVIEADVISORModel.MOVIES_GENRES" StoreEntitySet="MOVIES_GENRES">
+      <EndProperty Name="GENRES">
+        <ScalarProperty Name="ID" ColumnName="GENRE_ID" />
+      </EndProperty>
+      <EndProperty Name="MOVIES">
+        <ScalarProperty Name="ID" ColumnName="MOVIE_ID" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>

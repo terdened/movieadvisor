@@ -1,10 +1,109 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="MOVIEADVISORModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
   <EntityContainer Name="MOVIEADVISORModelStoreContainer">
+    <EntitySet Name="GENRES" EntityType="MOVIEADVISORModel.Store.GENRES" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="MOVIES" EntityType="MOVIEADVISORModel.Store.MOVIES" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="MOVIES_COMMENTS" EntityType="MOVIEADVISORModel.Store.MOVIES_COMMENTS" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="MOVIES_GENRES" EntityType="MOVIEADVISORModel.Store.MOVIES_GENRES" store:Type="Tables" store:Schema="dbo" store:Name="MOVIES_GENRES">
+      <DefiningQuery>SELECT 
+      [MOVIES_GENRES].[MOVIE_ID] AS [MOVIE_ID], 
+      [MOVIES_GENRES].[GENRE_ID] AS [GENRE_ID]
+      FROM [dbo].[MOVIES_GENRES] AS [MOVIES_GENRES]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="MOVIES_PERSONS_ROLES" EntityType="MOVIEADVISORModel.Store.MOVIES_PERSONS_ROLES" store:Type="Tables" store:Schema="dbo" store:Name="MOVIES_PERSONS_ROLES">
+      <DefiningQuery>SELECT 
+      [MOVIES_PERSONS_ROLES].[MOVIE_ID] AS [MOVIE_ID], 
+      [MOVIES_PERSONS_ROLES].[PERSON_ID] AS [PERSON_ID], 
+      [MOVIES_PERSONS_ROLES].[ROLE_ID] AS [ROLE_ID]
+      FROM [dbo].[MOVIES_PERSONS_ROLES] AS [MOVIES_PERSONS_ROLES]</DefiningQuery>
+    </EntitySet>
     <EntitySet Name="PERSONS" EntityType="MOVIEADVISORModel.Store.PERSONS" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PERSONS_COMMENTS" EntityType="MOVIEADVISORModel.Store.PERSONS_COMMENTS" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PICTURES" EntityType="MOVIEADVISORModel.Store.PICTURES" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PICTURES_MOVIES" EntityType="MOVIEADVISORModel.Store.PICTURES_MOVIES" store:Type="Tables" store:Schema="dbo" store:Name="PICTURES_MOVIES">
+      <DefiningQuery>SELECT 
+      [PICTURES_MOVIES].[MOVIE_ID] AS [MOVIE_ID], 
+      [PICTURES_MOVIES].[PICTURES_ID] AS [PICTURES_ID], 
+      [PICTURES_MOVIES].[IS_POSTER] AS [IS_POSTER]
+      FROM [dbo].[PICTURES_MOVIES] AS [PICTURES_MOVIES]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="PICTURES_PERSONS" EntityType="MOVIEADVISORModel.Store.PICTURES_PERSONS" store:Type="Tables" store:Schema="dbo" store:Name="PICTURES_PERSONS">
+      <DefiningQuery>SELECT 
+      [PICTURES_PERSONS].[PERSON_ID] AS [PERSON_ID], 
+      [PICTURES_PERSONS].[COMMENT_ID] AS [COMMENT_ID], 
+      [PICTURES_PERSONS].[IS_POSTER] AS [IS_POSTER]
+      FROM [dbo].[PICTURES_PERSONS] AS [PICTURES_PERSONS]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="ROLES" EntityType="MOVIEADVISORModel.Store.ROLES" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="USERS" EntityType="MOVIEADVISORModel.Store.USERS" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_MOVIES_COMMENTS_MOVIES" Association="MOVIEADVISORModel.Store.FK_MOVIES_COMMENTS_MOVIES">
+      <End Role="MOVIES" EntitySet="MOVIES" />
+      <End Role="MOVIES_COMMENTS" EntitySet="MOVIES_COMMENTS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MOVIES_COMMENTS_MOVIES_COMMENTS" Association="MOVIEADVISORModel.Store.FK_MOVIES_COMMENTS_MOVIES_COMMENTS">
+      <End Role="MOVIES_COMMENTS" EntitySet="MOVIES_COMMENTS" />
+      <End Role="MOVIES_COMMENTS1" EntitySet="MOVIES_COMMENTS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MOVIES_COMMENTS_USERS" Association="MOVIEADVISORModel.Store.FK_MOVIES_COMMENTS_USERS">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="MOVIES_COMMENTS" EntitySet="MOVIES_COMMENTS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MOVIES_GENRES_GENRES" Association="MOVIEADVISORModel.Store.FK_MOVIES_GENRES_GENRES">
+      <End Role="GENRES" EntitySet="GENRES" />
+      <End Role="MOVIES_GENRES" EntitySet="MOVIES_GENRES" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MOVIES_GENRES_MOVIES" Association="MOVIEADVISORModel.Store.FK_MOVIES_GENRES_MOVIES">
+      <End Role="MOVIES" EntitySet="MOVIES" />
+      <End Role="MOVIES_GENRES" EntitySet="MOVIES_GENRES" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MOVIES_PERSONS_ROLES_MOVIES" Association="MOVIEADVISORModel.Store.FK_MOVIES_PERSONS_ROLES_MOVIES">
+      <End Role="MOVIES" EntitySet="MOVIES" />
+      <End Role="MOVIES_PERSONS_ROLES" EntitySet="MOVIES_PERSONS_ROLES" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MOVIES_PERSONS_ROLES_PERSONS" Association="MOVIEADVISORModel.Store.FK_MOVIES_PERSONS_ROLES_PERSONS">
+      <End Role="PERSONS" EntitySet="PERSONS" />
+      <End Role="MOVIES_PERSONS_ROLES" EntitySet="MOVIES_PERSONS_ROLES" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MOVIES_PERSONS_ROLES_ROLES" Association="MOVIEADVISORModel.Store.FK_MOVIES_PERSONS_ROLES_ROLES">
+      <End Role="ROLES" EntitySet="ROLES" />
+      <End Role="MOVIES_PERSONS_ROLES" EntitySet="MOVIES_PERSONS_ROLES" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PERSONS_COMMENTS_PERSONS" Association="MOVIEADVISORModel.Store.FK_PERSONS_COMMENTS_PERSONS">
+      <End Role="PERSONS" EntitySet="PERSONS" />
+      <End Role="PERSONS_COMMENTS" EntitySet="PERSONS_COMMENTS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PERSONS_COMMENTS_PERSONS_COMMENTS" Association="MOVIEADVISORModel.Store.FK_PERSONS_COMMENTS_PERSONS_COMMENTS">
+      <End Role="PERSONS_COMMENTS" EntitySet="PERSONS_COMMENTS" />
+      <End Role="PERSONS_COMMENTS1" EntitySet="PERSONS_COMMENTS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PERSONS_COMMENTS_USERS" Association="MOVIEADVISORModel.Store.FK_PERSONS_COMMENTS_USERS">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="PERSONS_COMMENTS" EntitySet="PERSONS_COMMENTS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PICTURES_MOVIES_MOVIES" Association="MOVIEADVISORModel.Store.FK_PICTURES_MOVIES_MOVIES">
+      <End Role="MOVIES" EntitySet="MOVIES" />
+      <End Role="PICTURES_MOVIES" EntitySet="PICTURES_MOVIES" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PICTURES_MOVIES_PICTURES" Association="MOVIEADVISORModel.Store.FK_PICTURES_MOVIES_PICTURES">
+      <End Role="PICTURES" EntitySet="PICTURES" />
+      <End Role="PICTURES_MOVIES" EntitySet="PICTURES_MOVIES" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PICTURES_PERSONS_PERSONS" Association="MOVIEADVISORModel.Store.FK_PICTURES_PERSONS_PERSONS">
+      <End Role="PERSONS" EntitySet="PERSONS" />
+      <End Role="PICTURES_PERSONS" EntitySet="PICTURES_PERSONS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PICTURES_PERSONS_PICTURES" Association="MOVIEADVISORModel.Store.FK_PICTURES_PERSONS_PICTURES">
+      <End Role="PICTURES" EntitySet="PICTURES" />
+      <End Role="PICTURES_PERSONS" EntitySet="PICTURES_PERSONS" />
+    </AssociationSet>
   </EntityContainer>
+  <EntityType Name="GENRES">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="TITLE" Type="nchar" Nullable="false" MaxLength="30" />
+  </EntityType>
   <EntityType Name="MOVIES">
     <Key>
       <PropertyRef Name="ID" />
@@ -14,6 +113,41 @@
     <Property Name="DESCRIPTION" Type="nchar" MaxLength="1500" />
     <Property Name="YEAR" Type="int" />
   </EntityType>
+  <EntityType Name="MOVIES_COMMENTS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="TEXT" Type="nchar" MaxLength="2000" />
+    <Property Name="MARK" Type="int" />
+    <Property Name="PREV_COMMENT_ID" Type="int" />
+    <Property Name="USER_ID" Type="int" Nullable="false" />
+    <Property Name="MOVIE_ID" Type="int" Nullable="false" />
+  </EntityType>
+  <!--Ошибки, обнаруженные при создании:
+      предупреждение 6002: В таблице или представлении "C:\USERS\TERDE_000\COURSEWORK\MOVIEADVISOR\MOVIEADVISOR\MOVIEADVISOR\APP_DATA\MOVIEADVISOR.MDF.dbo.MOVIES_GENRES" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.
+      -->
+  <EntityType Name="MOVIES_GENRES">
+    <Key>
+      <PropertyRef Name="MOVIE_ID" />
+      <PropertyRef Name="GENRE_ID" />
+    </Key>
+    <Property Name="MOVIE_ID" Type="int" Nullable="false" />
+    <Property Name="GENRE_ID" Type="int" Nullable="false" />
+  </EntityType>
+  <!--Ошибки, обнаруженные при создании:
+      предупреждение 6002: В таблице или представлении "C:\USERS\TERDE_000\COURSEWORK\MOVIEADVISOR\MOVIEADVISOR\MOVIEADVISOR\APP_DATA\MOVIEADVISOR.MDF.dbo.MOVIES_PERSONS_ROLES" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.
+      -->
+  <EntityType Name="MOVIES_PERSONS_ROLES">
+    <Key>
+      <PropertyRef Name="MOVIE_ID" />
+      <PropertyRef Name="PERSON_ID" />
+      <PropertyRef Name="ROLE_ID" />
+    </Key>
+    <Property Name="MOVIE_ID" Type="int" Nullable="false" />
+    <Property Name="PERSON_ID" Type="int" Nullable="false" />
+    <Property Name="ROLE_ID" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="PERSONS">
     <Key>
       <PropertyRef Name="ID" />
@@ -21,6 +155,58 @@
     <Property Name="ID" Type="int" Nullable="false" />
     <Property Name="NAME" Type="nchar" Nullable="false" MaxLength="50" />
     <Property Name="DESCRIPTION" Type="nchar" MaxLength="1000" />
+  </EntityType>
+  <EntityType Name="PERSONS_COMMENTS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="TEXT" Type="nchar" MaxLength="2000" />
+    <Property Name="MARK" Type="int" />
+    <Property Name="PREV_COMMENT_ID" Type="int" />
+    <Property Name="USER_ID" Type="int" Nullable="false" />
+    <Property Name="PERSON_ID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PICTURES">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="TITLE" Type="nchar" Nullable="false" MaxLength="30" />
+    <Property Name="PATH" Type="nchar" Nullable="false" MaxLength="50" />
+  </EntityType>
+  <!--Ошибки, обнаруженные при создании:
+      предупреждение 6002: В таблице или представлении "C:\USERS\TERDE_000\COURSEWORK\MOVIEADVISOR\MOVIEADVISOR\MOVIEADVISOR\APP_DATA\MOVIEADVISOR.MDF.dbo.PICTURES_MOVIES" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.
+      -->
+  <EntityType Name="PICTURES_MOVIES">
+    <Key>
+      <PropertyRef Name="MOVIE_ID" />
+      <PropertyRef Name="PICTURES_ID" />
+      <PropertyRef Name="IS_POSTER" />
+    </Key>
+    <Property Name="MOVIE_ID" Type="int" Nullable="false" />
+    <Property Name="PICTURES_ID" Type="int" Nullable="false" />
+    <Property Name="IS_POSTER" Type="bit" Nullable="false" />
+  </EntityType>
+  <!--Ошибки, обнаруженные при создании:
+      предупреждение 6002: В таблице или представлении "C:\USERS\TERDE_000\COURSEWORK\MOVIEADVISOR\MOVIEADVISOR\MOVIEADVISOR\APP_DATA\MOVIEADVISOR.MDF.dbo.PICTURES_PERSONS" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.
+      -->
+  <EntityType Name="PICTURES_PERSONS">
+    <Key>
+      <PropertyRef Name="PERSON_ID" />
+      <PropertyRef Name="COMMENT_ID" />
+      <PropertyRef Name="IS_POSTER" />
+    </Key>
+    <Property Name="PERSON_ID" Type="int" Nullable="false" />
+    <Property Name="COMMENT_ID" Type="int" Nullable="false" />
+    <Property Name="IS_POSTER" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ROLES">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="TITLE" Type="nchar" Nullable="false" MaxLength="30" />
   </EntityType>
   <EntityType Name="USERS">
     <Key>
@@ -32,4 +218,184 @@
     <Property Name="ROLES" Type="nchar" Nullable="false" MaxLength="10" />
     <Property Name="EMAIL" Type="nchar" MaxLength="40" />
   </EntityType>
+  <Association Name="FK_MOVIES_COMMENTS_MOVIES">
+    <End Role="MOVIES" Type="MOVIEADVISORModel.Store.MOVIES" Multiplicity="1" />
+    <End Role="MOVIES_COMMENTS" Type="MOVIEADVISORModel.Store.MOVIES_COMMENTS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MOVIES">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="MOVIES_COMMENTS">
+        <PropertyRef Name="MOVIE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MOVIES_COMMENTS_MOVIES_COMMENTS">
+    <End Role="MOVIES_COMMENTS" Type="MOVIEADVISORModel.Store.MOVIES_COMMENTS" Multiplicity="0..1" />
+    <End Role="MOVIES_COMMENTS1" Type="MOVIEADVISORModel.Store.MOVIES_COMMENTS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MOVIES_COMMENTS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="MOVIES_COMMENTS1">
+        <PropertyRef Name="PREV_COMMENT_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MOVIES_COMMENTS_USERS">
+    <End Role="USERS" Type="MOVIEADVISORModel.Store.USERS" Multiplicity="1" />
+    <End Role="MOVIES_COMMENTS" Type="MOVIEADVISORModel.Store.MOVIES_COMMENTS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="MOVIES_COMMENTS">
+        <PropertyRef Name="USER_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MOVIES_GENRES_GENRES">
+    <End Role="GENRES" Type="MOVIEADVISORModel.Store.GENRES" Multiplicity="1" />
+    <End Role="MOVIES_GENRES" Type="MOVIEADVISORModel.Store.MOVIES_GENRES" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GENRES">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="MOVIES_GENRES">
+        <PropertyRef Name="GENRE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MOVIES_GENRES_MOVIES">
+    <End Role="MOVIES" Type="MOVIEADVISORModel.Store.MOVIES" Multiplicity="1" />
+    <End Role="MOVIES_GENRES" Type="MOVIEADVISORModel.Store.MOVIES_GENRES" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MOVIES">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="MOVIES_GENRES">
+        <PropertyRef Name="MOVIE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MOVIES_PERSONS_ROLES_MOVIES">
+    <End Role="MOVIES" Type="MOVIEADVISORModel.Store.MOVIES" Multiplicity="1" />
+    <End Role="MOVIES_PERSONS_ROLES" Type="MOVIEADVISORModel.Store.MOVIES_PERSONS_ROLES" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MOVIES">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="MOVIES_PERSONS_ROLES">
+        <PropertyRef Name="MOVIE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MOVIES_PERSONS_ROLES_PERSONS">
+    <End Role="PERSONS" Type="MOVIEADVISORModel.Store.PERSONS" Multiplicity="1" />
+    <End Role="MOVIES_PERSONS_ROLES" Type="MOVIEADVISORModel.Store.MOVIES_PERSONS_ROLES" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PERSONS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="MOVIES_PERSONS_ROLES">
+        <PropertyRef Name="PERSON_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MOVIES_PERSONS_ROLES_ROLES">
+    <End Role="ROLES" Type="MOVIEADVISORModel.Store.ROLES" Multiplicity="1" />
+    <End Role="MOVIES_PERSONS_ROLES" Type="MOVIEADVISORModel.Store.MOVIES_PERSONS_ROLES" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ROLES">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="MOVIES_PERSONS_ROLES">
+        <PropertyRef Name="ROLE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PERSONS_COMMENTS_PERSONS">
+    <End Role="PERSONS" Type="MOVIEADVISORModel.Store.PERSONS" Multiplicity="1" />
+    <End Role="PERSONS_COMMENTS" Type="MOVIEADVISORModel.Store.PERSONS_COMMENTS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PERSONS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PERSONS_COMMENTS">
+        <PropertyRef Name="PERSON_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PERSONS_COMMENTS_PERSONS_COMMENTS">
+    <End Role="PERSONS_COMMENTS" Type="MOVIEADVISORModel.Store.PERSONS_COMMENTS" Multiplicity="0..1" />
+    <End Role="PERSONS_COMMENTS1" Type="MOVIEADVISORModel.Store.PERSONS_COMMENTS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PERSONS_COMMENTS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PERSONS_COMMENTS1">
+        <PropertyRef Name="PREV_COMMENT_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PERSONS_COMMENTS_USERS">
+    <End Role="USERS" Type="MOVIEADVISORModel.Store.USERS" Multiplicity="1" />
+    <End Role="PERSONS_COMMENTS" Type="MOVIEADVISORModel.Store.PERSONS_COMMENTS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PERSONS_COMMENTS">
+        <PropertyRef Name="USER_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PICTURES_MOVIES_MOVIES">
+    <End Role="MOVIES" Type="MOVIEADVISORModel.Store.MOVIES" Multiplicity="1" />
+    <End Role="PICTURES_MOVIES" Type="MOVIEADVISORModel.Store.PICTURES_MOVIES" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MOVIES">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PICTURES_MOVIES">
+        <PropertyRef Name="MOVIE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PICTURES_MOVIES_PICTURES">
+    <End Role="PICTURES" Type="MOVIEADVISORModel.Store.PICTURES" Multiplicity="1" />
+    <End Role="PICTURES_MOVIES" Type="MOVIEADVISORModel.Store.PICTURES_MOVIES" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PICTURES">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PICTURES_MOVIES">
+        <PropertyRef Name="PICTURES_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PICTURES_PERSONS_PERSONS">
+    <End Role="PERSONS" Type="MOVIEADVISORModel.Store.PERSONS" Multiplicity="1" />
+    <End Role="PICTURES_PERSONS" Type="MOVIEADVISORModel.Store.PICTURES_PERSONS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PERSONS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PICTURES_PERSONS">
+        <PropertyRef Name="PERSON_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PICTURES_PERSONS_PICTURES">
+    <End Role="PICTURES" Type="MOVIEADVISORModel.Store.PICTURES" Multiplicity="1" />
+    <End Role="PICTURES_PERSONS" Type="MOVIEADVISORModel.Store.PICTURES_PERSONS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PICTURES">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PICTURES_PERSONS">
+        <PropertyRef Name="PERSON_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>
