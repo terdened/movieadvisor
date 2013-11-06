@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="MOVIEADVISORModelStoreContainer" CdmEntityContainer="MOVIEADVISOREntities4">
+  <EntityContainerMapping StorageEntityContainer="MOVIEADVISORModelStoreContainer" CdmEntityContainer="MOVIEADVISOREntities6">
     <EntitySetMapping Name="GENRES">
       <EntityTypeMapping TypeName="MOVIEADVISORModel.GENRES">
         <MappingFragment StoreEntitySet="GENRES">
@@ -83,7 +83,7 @@
       <EntityTypeMapping TypeName="MOVIEADVISORModel.PICTURES_PERSONS">
         <MappingFragment StoreEntitySet="PICTURES_PERSONS">
           <ScalarProperty Name="PERSON_ID" ColumnName="PERSON_ID" />
-          <ScalarProperty Name="COMMENT_ID" ColumnName="COMMENT_ID" />
+          <ScalarProperty Name="PICTURE_ID" ColumnName="PICTURE_ID" />
           <ScalarProperty Name="IS_POSTER" ColumnName="IS_POSTER" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -107,13 +107,14 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <AssociationSetMapping Name="MOVIES_GENRES" TypeName="MOVIEADVISORModel.MOVIES_GENRES" StoreEntitySet="MOVIES_GENRES">
-      <EndProperty Name="GENRES">
-        <ScalarProperty Name="ID" ColumnName="GENRE_ID" />
-      </EndProperty>
-      <EndProperty Name="MOVIES">
-        <ScalarProperty Name="ID" ColumnName="MOVIE_ID" />
-      </EndProperty>
-    </AssociationSetMapping>
+    <EntitySetMapping Name="MOVIES_GENRES">
+      <EntityTypeMapping TypeName="MOVIEADVISORModel.MOVIES_GENRES">
+        <MappingFragment StoreEntitySet="MOVIES_GENRES">
+          <ScalarProperty Name="empty" ColumnName="empty" />
+          <ScalarProperty Name="GENRE_ID" ColumnName="GENRE_ID" />
+          <ScalarProperty Name="MOVIE_ID" ColumnName="MOVIE_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

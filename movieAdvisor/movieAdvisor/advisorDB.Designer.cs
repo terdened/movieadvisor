@@ -32,7 +32,8 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("MOVIEADVISORModel", "FK_PERSONS_COMMENTS_USERS", "USERS", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(movieAdvisor.USERS), "PERSONS_COMMENTS", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(movieAdvisor.PERSONS_COMMENTS), true)]
 [assembly: EdmRelationshipAttribute("MOVIEADVISORModel", "FK_PICTURES_MOVIES_PICTURES", "PICTURES", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(movieAdvisor.PICTURES), "PICTURES_MOVIES", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(movieAdvisor.PICTURES_MOVIES), true)]
 [assembly: EdmRelationshipAttribute("MOVIEADVISORModel", "FK_PICTURES_PERSONS_PICTURES", "PICTURES", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(movieAdvisor.PICTURES), "PICTURES_PERSONS", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(movieAdvisor.PICTURES_PERSONS), true)]
-[assembly: EdmRelationshipAttribute("MOVIEADVISORModel", "MOVIES_GENRES", "GENRES", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(movieAdvisor.GENRES), "MOVIES", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(movieAdvisor.MOVIES))]
+[assembly: EdmRelationshipAttribute("MOVIEADVISORModel", "FK_MOVIES_GENRES_GENRES", "GENRES", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(movieAdvisor.GENRES), "MOVIES_GENRES", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(movieAdvisor.MOVIES_GENRES), true)]
+[assembly: EdmRelationshipAttribute("MOVIEADVISORModel", "FK_MOVIES_GENRES_MOVIES", "MOVIES", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(movieAdvisor.MOVIES), "MOVIES_GENRES", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(movieAdvisor.MOVIES_GENRES), true)]
 
 #endregion
 
@@ -43,32 +44,32 @@ namespace movieAdvisor
     /// <summary>
     /// Нет доступной документации по метаданным.
     /// </summary>
-    public partial class MOVIEADVISOREntities5 : ObjectContext
+    public partial class MOVIEADVISOREntities6 : ObjectContext
     {
         #region Конструкторы
     
         /// <summary>
-        /// Инициализирует новый объект MOVIEADVISOREntities5, используя строку соединения из раздела "MOVIEADVISOREntities5" файла конфигурации приложения.
+        /// Инициализирует новый объект MOVIEADVISOREntities6, используя строку соединения из раздела "MOVIEADVISOREntities6" файла конфигурации приложения.
         /// </summary>
-        public MOVIEADVISOREntities5() : base("name=MOVIEADVISOREntities5", "MOVIEADVISOREntities5")
+        public MOVIEADVISOREntities6() : base("name=MOVIEADVISOREntities6", "MOVIEADVISOREntities6")
         {
             this.ContextOptions.LazyLoadingEnabled = true;
             OnContextCreated();
         }
     
         /// <summary>
-        /// Инициализация нового объекта MOVIEADVISOREntities5.
+        /// Инициализация нового объекта MOVIEADVISOREntities6.
         /// </summary>
-        public MOVIEADVISOREntities5(string connectionString) : base(connectionString, "MOVIEADVISOREntities5")
+        public MOVIEADVISOREntities6(string connectionString) : base(connectionString, "MOVIEADVISOREntities6")
         {
             this.ContextOptions.LazyLoadingEnabled = true;
             OnContextCreated();
         }
     
         /// <summary>
-        /// Инициализация нового объекта MOVIEADVISOREntities5.
+        /// Инициализация нового объекта MOVIEADVISOREntities6.
         /// </summary>
-        public MOVIEADVISOREntities5(EntityConnection connection) : base(connection, "MOVIEADVISOREntities5")
+        public MOVIEADVISOREntities6(EntityConnection connection) : base(connection, "MOVIEADVISOREntities6")
         {
             this.ContextOptions.LazyLoadingEnabled = true;
             OnContextCreated();
@@ -259,6 +260,22 @@ namespace movieAdvisor
             }
         }
         private ObjectSet<USERS> _USERS;
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        public ObjectSet<MOVIES_GENRES> MOVIES_GENRES
+        {
+            get
+            {
+                if ((_MOVIES_GENRES == null))
+                {
+                    _MOVIES_GENRES = base.CreateObjectSet<MOVIES_GENRES>("MOVIES_GENRES");
+                }
+                return _MOVIES_GENRES;
+            }
+        }
+        private ObjectSet<MOVIES_GENRES> _MOVIES_GENRES;
 
         #endregion
 
@@ -350,6 +367,14 @@ namespace movieAdvisor
         public void AddToUSERS(USERS uSERS)
         {
             base.AddObject("USERS", uSERS);
+        }
+    
+        /// <summary>
+        /// Устаревший метод для добавления новых объектов в набор EntitySet MOVIES_GENRES. Взамен можно использовать метод .Add связанного свойства ObjectSet&lt;T&gt;.
+        /// </summary>
+        public void AddToMOVIES_GENRES(MOVIES_GENRES mOVIES_GENRES)
+        {
+            base.AddObject("MOVIES_GENRES", mOVIES_GENRES);
         }
 
         #endregion
@@ -449,18 +474,18 @@ namespace movieAdvisor
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("MOVIEADVISORModel", "MOVIES_GENRES", "MOVIES")]
-        public EntityCollection<MOVIES> MOVIES
+        [EdmRelationshipNavigationPropertyAttribute("MOVIEADVISORModel", "FK_MOVIES_GENRES_GENRES", "MOVIES_GENRES")]
+        public EntityCollection<MOVIES_GENRES> MOVIES_GENRES
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<MOVIES>("MOVIEADVISORModel.MOVIES_GENRES", "MOVIES");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<MOVIES_GENRES>("MOVIEADVISORModel.FK_MOVIES_GENRES_GENRES", "MOVIES_GENRES");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<MOVIES>("MOVIEADVISORModel.MOVIES_GENRES", "MOVIES", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<MOVIES_GENRES>("MOVIEADVISORModel.FK_MOVIES_GENRES_GENRES", "MOVIES_GENRES", value);
                 }
             }
         }
@@ -672,18 +697,18 @@ namespace movieAdvisor
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("MOVIEADVISORModel", "MOVIES_GENRES", "GENRES")]
-        public EntityCollection<GENRES> GENRES
+        [EdmRelationshipNavigationPropertyAttribute("MOVIEADVISORModel", "FK_MOVIES_GENRES_MOVIES", "MOVIES_GENRES")]
+        public EntityCollection<MOVIES_GENRES> MOVIES_GENRES
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<GENRES>("MOVIEADVISORModel.MOVIES_GENRES", "GENRES");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<MOVIES_GENRES>("MOVIEADVISORModel.FK_MOVIES_GENRES_MOVIES", "MOVIES_GENRES");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<GENRES>("MOVIEADVISORModel.MOVIES_GENRES", "GENRES", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<MOVIES_GENRES>("MOVIEADVISORModel.FK_MOVIES_GENRES_MOVIES", "MOVIES_GENRES", value);
                 }
             }
         }
@@ -1005,6 +1030,196 @@ namespace movieAdvisor
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<USERS>("MOVIEADVISORModel.FK_MOVIES_COMMENTS_USERS", "USERS", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// Нет доступной документации по метаданным.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="MOVIEADVISORModel", Name="MOVIES_GENRES")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class MOVIES_GENRES : EntityObject
+    {
+        #region Фабричный метод
+    
+        /// <summary>
+        /// Создание нового объекта MOVIES_GENRES.
+        /// </summary>
+        /// <param name="mOVIE_ID">Исходное значение свойства MOVIE_ID.</param>
+        /// <param name="gENRE_ID">Исходное значение свойства GENRE_ID.</param>
+        public static MOVIES_GENRES CreateMOVIES_GENRES(global::System.Int32 mOVIE_ID, global::System.Int32 gENRE_ID)
+        {
+            MOVIES_GENRES mOVIES_GENRES = new MOVIES_GENRES();
+            mOVIES_GENRES.MOVIE_ID = mOVIE_ID;
+            mOVIES_GENRES.GENRE_ID = gENRE_ID;
+            return mOVIES_GENRES;
+        }
+
+        #endregion
+
+        #region Свойства-примитивы
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 MOVIE_ID
+        {
+            get
+            {
+                return _MOVIE_ID;
+            }
+            set
+            {
+                if (_MOVIE_ID != value)
+                {
+                    OnMOVIE_IDChanging(value);
+                    ReportPropertyChanging("MOVIE_ID");
+                    _MOVIE_ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("MOVIE_ID");
+                    OnMOVIE_IDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _MOVIE_ID;
+        partial void OnMOVIE_IDChanging(global::System.Int32 value);
+        partial void OnMOVIE_IDChanged();
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 GENRE_ID
+        {
+            get
+            {
+                return _GENRE_ID;
+            }
+            set
+            {
+                if (_GENRE_ID != value)
+                {
+                    OnGENRE_IDChanging(value);
+                    ReportPropertyChanging("GENRE_ID");
+                    _GENRE_ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("GENRE_ID");
+                    OnGENRE_IDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _GENRE_ID;
+        partial void OnGENRE_IDChanging(global::System.Int32 value);
+        partial void OnGENRE_IDChanged();
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String empty
+        {
+            get
+            {
+                return _empty;
+            }
+            set
+            {
+                OnemptyChanging(value);
+                ReportPropertyChanging("empty");
+                _empty = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("empty");
+                OnemptyChanged();
+            }
+        }
+        private global::System.String _empty;
+        partial void OnemptyChanging(global::System.String value);
+        partial void OnemptyChanged();
+
+        #endregion
+
+    
+        #region Свойства навигации
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("MOVIEADVISORModel", "FK_MOVIES_GENRES_GENRES", "GENRES")]
+        public GENRES GENRES
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<GENRES>("MOVIEADVISORModel.FK_MOVIES_GENRES_GENRES", "GENRES").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<GENRES>("MOVIEADVISORModel.FK_MOVIES_GENRES_GENRES", "GENRES").Value = value;
+            }
+        }
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<GENRES> GENRESReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<GENRES>("MOVIEADVISORModel.FK_MOVIES_GENRES_GENRES", "GENRES");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<GENRES>("MOVIEADVISORModel.FK_MOVIES_GENRES_GENRES", "GENRES", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("MOVIEADVISORModel", "FK_MOVIES_GENRES_MOVIES", "MOVIES")]
+        public MOVIES MOVIES
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<MOVIES>("MOVIEADVISORModel.FK_MOVIES_GENRES_MOVIES", "MOVIES").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<MOVIES>("MOVIEADVISORModel.FK_MOVIES_GENRES_MOVIES", "MOVIES").Value = value;
+            }
+        }
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<MOVIES> MOVIESReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<MOVIES>("MOVIEADVISORModel.FK_MOVIES_GENRES_MOVIES", "MOVIES");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<MOVIES>("MOVIEADVISORModel.FK_MOVIES_GENRES_MOVIES", "MOVIES", value);
                 }
             }
         }
@@ -1987,7 +2202,7 @@ namespace movieAdvisor
         /// <summary>
         /// Нет доступной документации по метаданным.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
         public global::System.Boolean IS_POSTER
         {
@@ -1997,14 +2212,11 @@ namespace movieAdvisor
             }
             set
             {
-                if (_IS_POSTER != value)
-                {
-                    OnIS_POSTERChanging(value);
-                    ReportPropertyChanging("IS_POSTER");
-                    _IS_POSTER = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("IS_POSTER");
-                    OnIS_POSTERChanged();
-                }
+                OnIS_POSTERChanging(value);
+                ReportPropertyChanging("IS_POSTER");
+                _IS_POSTER = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IS_POSTER");
+                OnIS_POSTERChanged();
             }
         }
         private global::System.Boolean _IS_POSTER;
@@ -2182,7 +2394,7 @@ namespace movieAdvisor
         /// <summary>
         /// Нет доступной документации по метаданным.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
         public global::System.Boolean IS_POSTER
         {
@@ -2192,14 +2404,11 @@ namespace movieAdvisor
             }
             set
             {
-                if (_IS_POSTER != value)
-                {
-                    OnIS_POSTERChanging(value);
-                    ReportPropertyChanging("IS_POSTER");
-                    _IS_POSTER = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("IS_POSTER");
-                    OnIS_POSTERChanged();
-                }
+                OnIS_POSTERChanging(value);
+                ReportPropertyChanging("IS_POSTER");
+                _IS_POSTER = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IS_POSTER");
+                OnIS_POSTERChanged();
             }
         }
         private global::System.Boolean _IS_POSTER;

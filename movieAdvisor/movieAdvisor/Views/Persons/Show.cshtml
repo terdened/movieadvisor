@@ -1,14 +1,28 @@
 ﻿@model movieAdvisor.Models.PersonShow
 
 @{
+    if (Roles.IsUserInRole(User.Identity.Name, "admin"))
+    {
+        Layout = Url.Content("../Shared/_AdminLayout.cshtml");
+    }
     ViewBag.Title = Model.person.NAME;
 }
 
 <table width="100%">
         <tr>
             <td width="100%" align="center">
-                <div class="editor-label">
-                    <h2>@Model.person.NAME</h2>
+                <div class="editor-label" style="display:inline">
+                    <h2 style="display:inline">@Model.person.NAME</h2>
+                    @{
+                        if (Roles.IsUserInRole(User.Identity.Name,"admin"))
+                        {
+                            @Html.ActionLink("[Изменить]", "AddPerson", new { id = Model.person.ID })
+                        }
+                        if (Roles.IsUserInRole(User.Identity.Name,"admin"))
+                        {
+                            @Html.ActionLink(" [Удалить]", "DelPerson", new { id = Model.person.ID })
+                        }
+                    }
                 </div>
             </td>
         </tr>

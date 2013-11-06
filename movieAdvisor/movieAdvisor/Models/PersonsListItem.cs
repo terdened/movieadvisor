@@ -14,7 +14,7 @@ namespace movieAdvisor.Models
 
         public PersonsListItem(PERSONS person)
         {
-            MOVIEADVISOREntities5 entities = new MOVIEADVISOREntities5();
+            MOVIEADVISOREntities6 entities = new MOVIEADVISOREntities6();
             int tempPosterId=entities.PICTURES_PERSONS.Where(pp=>pp.PERSON_ID==person.ID && pp.IS_POSTER==true).FirstOrDefault().PICTURE_ID;
             if (tempPosterId > 0)
             {

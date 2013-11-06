@@ -1,0 +1,71 @@
+﻿@model movieAdvisor.Models.MovieShow
+
+@{
+    int i=0;
+    bool thereisDirector=false;
+    foreach(var person in Model.personsList)
+    {
+        bool isDirect = false;
+        foreach(var role in person.roles)
+        {
+            if (role.ID == 2)
+            {
+                isDirect = true;
+            }   
+        }
+
+        if (isDirect)
+        {
+            if(!thereisDirector)
+            {
+                <div class="editor-label">
+                    Режиссеры:
+                </div>
+                thereisDirector = true;
+            }
+            <div class="editor-photo">
+                <img src=@Url.Content("~/Uploads/" + person.picture.PATH) width="90" height="130" alt=@(person.picture.TITLE) />
+            </div>
+            <div class="editor-label">
+                @Html.ActionLink(person.person.NAME, "Show", "Persons", new { id = person.person.ID }, null)
+                @Html.HiddenFor(m => m.personsList[i].person.ID)
+                @Html.HiddenFor(m => m.personsList[i].roles[0].ID)
+            </div>
+        }
+        i++;
+    }
+
+    i = 0;
+    bool thereisActor = false;
+    foreach (var person in Model.personsList)
+    {
+        bool isActor = false;
+        foreach (var role in person.roles)
+        {
+            if (role.ID == 1)
+            {
+                isActor = true;
+            }
+        }
+
+        if (isActor)
+        {
+            if (!thereisActor)
+            {
+                <div class="editor-label">
+                    Актеры:
+                </div>
+                thereisActor = true;
+            }
+            <div class="editor-photo">
+                <img src=@Url.Content("~/Uploads/" + person.picture.PATH) width="90" height="130" alt=@(person.picture.TITLE) />
+            </div>
+            <div class="editor-label">
+                @Html.ActionLink(person.person.NAME, "Show", "Persons", new { id = person.person.ID }, null)
+                @Html.HiddenFor(m => m.personsList[i].person.ID)
+                @Html.HiddenFor(m => m.personsList[i].roles[0].ID)
+            </div>
+        }
+        i++;   
+    }
+}

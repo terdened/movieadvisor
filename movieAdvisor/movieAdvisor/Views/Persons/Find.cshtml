@@ -1,6 +1,10 @@
 ﻿@model List<movieAdvisor.Models.PersonsListItem>
 
 @{
+    if (Roles.IsUserInRole(User.Identity.Name, "admin"))
+    {
+        Layout = Url.Content("../Shared/_AdminLayout.cshtml");
+    }
     ViewBag.Title = "Поиск личностей";
 }
 
@@ -20,6 +24,16 @@
             <td width="100%" align="center">
                 <div class="editor-label">
                     @Html.ActionLink(person.person.NAME, "Show", new { id = person.person.ID })
+                    @{
+                        if (Roles.IsUserInRole(User.Identity.Name,"admin"))
+                        {
+                            @Html.ActionLink("[Изменить]", "AddPerson", new { id = person.person.ID  })
+                        }
+                        if (Roles.IsUserInRole(User.Identity.Name,"admin"))
+                        {
+                            @Html.ActionLink(" [Удалить]", "DelPerson", new { id = person.person.ID  })
+                        }
+                    }
                 </div>
             </td>
         </tr>

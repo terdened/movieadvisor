@@ -1,0 +1,101 @@
+﻿@model movieAdvisor.Models.MovieShow
+
+@{
+    if (Roles.IsUserInRole(User.Identity.Name, "admin"))
+    {
+        Layout = Url.Content("../Shared/_AdminLayout.cshtml");
+    }
+    ViewBag.Title = Model.movie.TITLE;
+}                  
+                            
+@using (Html.BeginForm("AddMovie", "Movies", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+@Html.HiddenFor(m=>m.movie.ID)   
+<table width="100%">
+    <tr>
+        <td width="100%" align="center">
+            <div class="editor-label">
+                @Html.TextBoxFor(m => m.movie.TITLE)
+            </div>
+        </td>
+    </tr>
+</table>
+<table width="100%">
+    <tr>
+        <td width="90%" valign="top">
+            <table width="100%" valign="top">
+                <tr valign="top">
+                    <td width="20%" align="center">
+                        <div class="editor-poster" >
+                            <div class="editor-poster" style="display:inline" >
+                                @{
+                                    if (Model.posterId <0)
+                                    {
+                                        <input type="file" id="poster" name="poster" style="display:inline" />
+                                        <input type="submit" name="action" value="Загрузить постер" style="display:inline" />
+                                    }
+                                    else
+                                    {
+                                        string temp= Model.poster;
+                                        @:<input id="posterId" name="posterId" type="hidden" value=@(Model.posterId)>
+                                        @:<input id="poster" name="poster" type="hidden" value=@(Model.poster)>
+                                        @:<img id="poster" src="@Url.Content("~/Uploads/" + temp)"/ width="185" height="273" >
+                                    }
+                                }                          
+                            </div>
+                        </div>
+                    </td>
+                    <td width="80%">
+                        <div>
+                            @Html.Partial("AddMovie/_GenresList")
+                        </div>
+                        <div>
+                            <p>
+                                Год выпуска: @Html.EditorFor(m=>m.movie.YEAR)
+                            </p>
+                        </div>
+                        <div class="editor-description">
+                            <p>
+                                Описание:
+                            </p>
+                            <p>
+                                <textarea cols="20" id="movie_DESCRIPTION" name="movie.DESCRIPTION" style="width:100%">@(Model.movie.DESCRIPTION)</textarea>
+                            </p>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                    Кадры из фильма:
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan=2 align="center">
+                        @Html.Partial("AddMovie/_PhotosList")
+                        <br />
+                        <div class="editor-photo" style="display:inline" >
+                            <input type="file" id="foto" name="foto" style="display:inline" />
+                            <input type="submit" name="action" value="Загрузить фото" style="display:inline" />
+                        </div>   
+                    </td>
+                </tr>
+            </table>
+        </td>
+        <td width="10%" align="center" valign="top">
+            <div class="editor-persons">
+                @Html.Partial("AddMovie/_PersonsList")
+                @{
+                                    IEnumerable<SelectListItem> persons = ViewBag.persons;
+                                    IEnumerable<SelectListItem> roles = ViewBag.roles;
+                    @Html.DropDownList("person", persons);
+                    @Html.DropDownList("role", roles);                                    
+                    <input type="submit" name="action" value="Добавить личность" />
+                }
+            </div>
+        </td>
+    </tr>
+</table>
+
+<input type="submit" name="action" value="Сохранить" />
+}

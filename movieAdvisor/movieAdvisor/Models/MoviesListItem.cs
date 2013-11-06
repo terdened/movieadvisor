@@ -14,12 +14,13 @@ namespace movieAdvisor.Models
 
         public MoviesListItem(MOVIES movie)
         {
-            MOVIEADVISOREntities5 entities = new MOVIEADVISOREntities5();
-            int tempPosterId=entities.PICTURES_MOVIES.Where(pm=>pm.MOVIE_ID==movie.ID && pm.IS_POSTER==true).FirstOrDefault().PICTURES_ID;
-            if (tempPosterId > 0)
+            MOVIEADVISOREntities6 entities = new MOVIEADVISOREntities6();
+            var tempPosterId=entities.PICTURES_MOVIES.Where(pm=>pm.MOVIE_ID==movie.ID && pm.IS_POSTER==true).ToList();
+            if (tempPosterId.Count > 0)
             {
-                poster = entities.PICTURES.Where(p => p.ID == tempPosterId).First().PATH;
-                alt=entities.PICTURES.Where(p => p.ID == tempPosterId).First().TITLE;
+                int tempId=tempPosterId[0].PICTURES_ID;
+                poster = entities.PICTURES.Where(p => p.ID == tempId).First().PATH;
+                alt = entities.PICTURES.Where(p => p.ID == tempId).First().TITLE;
             }
             else
             {
@@ -28,6 +29,11 @@ namespace movieAdvisor.Models
             }
 
             this.movie = movie;
+            genres = new List<GENRES>();
+            foreach (var genre in movie.MOVIES_GENRES)
+            {
+                genres.Add(entities.GENRES.Where(g=>g.ID==genre.GENRE_ID).First());
+            }
         }
     }
 }

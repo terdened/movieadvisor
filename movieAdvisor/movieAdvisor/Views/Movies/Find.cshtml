@@ -1,15 +1,31 @@
 ﻿@model List<movieAdvisor.Models.MoviesListItem>
 
 @{
+    if (Roles.IsUserInRole(User.Identity.Name, "admin"))
+    {
+        Layout = Url.Content("../Shared/_AdminLayout.cshtml");
+    }
     ViewBag.Title = "Поиск фильмов";
 }
 
 <h2>Поиск фильмов</h2>
 
-@using(Html.BeginForm("Find","Movies",FormMethod.Post))
+@using(Html.BeginForm("FindPost","Movies",FormMethod.Post))
 {
-    @:Поиск
+    List<SelectListItem> years=new List<SelectListItem>();
+    List<SelectListItem> genres = ViewBag.genres;
+        years.Add(new SelectListItem() { Text = "Любой", Value = "0" });
+    for(int i=2013; i>1960;i--)
+    {
+        years.Add(new SelectListItem() { Text=i.ToString(), Value=i.ToString()});
+    }
+    
+    @:Ключевое слово: 
     <input type="text" name="keyWord" id="keyWord" />
+    @: Год выпуска: 
+    @Html.DropDownList("year",years)
+    @: Жанр: 
+    @Html.DropDownList("genre", genres)
     <input type="submit" />
 }
 
@@ -20,7 +36,18 @@
             <td width="100%" align="center">
                 <div class="editor-label">
                     @Html.ActionLink(movie.movie.TITLE, "Show", new { id = movie.movie.ID })
+                    @{
+    if (Roles.IsUserInRole(User.Identity.Name, "admin"))
+    {
+                            @Html.ActionLink("[Изменить]", "AddMovie", new { id = movie.movie.ID })
+    }
+    if (Roles.IsUserInRole(User.Identity.Name, "admin"))
+    {
+                            @Html.ActionLink(" [Удалить]", "DelMovie", new { id = movie.movie.ID })
+    }
+                    }
                 </div>
+ 
             </td>
         </tr>
     </table>
@@ -32,6 +59,20 @@
                 </div>
             </td>
             <td width="80%" valign="top">
+                <div>
+                    @Html.Partial("Find/_GenresList", movie)
+                </div>
+                <div>
+                    @try
+                    {
+                        <p>
+                            Год выпуска: @Html.ActionLink(movie.movie.YEAR.ToString(), "FindPost", new { year = movie.movie.YEAR })
+                        </p>
+                    }
+                    catch
+                    {
+                    }   
+                </div>
                 <div class="editor-description">
                     <p>
                         Описание:

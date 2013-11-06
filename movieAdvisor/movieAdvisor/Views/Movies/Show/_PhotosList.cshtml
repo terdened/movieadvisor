@@ -1,0 +1,16 @@
+﻿@model movieAdvisor.Models.MovieShow
+
+<div class="editor-glarey" style="display:inline" >
+    @{
+            int j = 0;
+            foreach (var pic in Model.picturesList)
+            {
+            <div class="editor-photo" style="display:inline" >
+                @Html.HiddenFor(model => model.picturesList[j].ID)
+                @Html.HiddenFor(model => model.picturesList[j].PATH)
+                <img id="photo" src="@Url.Content("~/Uploads/" + pic.PATH)"/ width="160" height="120" alt="@pic.TITLE">                          
+            </div>
+                j++;
+            }
+    }
+</div>

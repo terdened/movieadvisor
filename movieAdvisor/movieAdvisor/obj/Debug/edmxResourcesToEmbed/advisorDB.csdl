@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="MOVIEADVISORModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
-  <EntityContainer Name="MOVIEADVISOREntities4" annotation:LazyLoadingEnabled="true">
+  <EntityContainer Name="MOVIEADVISOREntities6" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="GENRES" EntityType="MOVIEADVISORModel.GENRES" />
     <EntitySet Name="MOVIES" EntityType="MOVIEADVISORModel.MOVIES" />
     <EntitySet Name="MOVIES_COMMENTS" EntityType="MOVIEADVISORModel.MOVIES_COMMENTS" />
@@ -64,9 +64,14 @@
       <End Role="PICTURES" EntitySet="PICTURES" />
       <End Role="PICTURES_PERSONS" EntitySet="PICTURES_PERSONS" />
     </AssociationSet>
-    <AssociationSet Name="MOVIES_GENRES" Association="MOVIEADVISORModel.MOVIES_GENRES">
+    <EntitySet Name="MOVIES_GENRES" EntityType="MOVIEADVISORModel.MOVIES_GENRES" />
+    <AssociationSet Name="FK_MOVIES_GENRES_GENRES" Association="MOVIEADVISORModel.FK_MOVIES_GENRES_GENRES">
       <End Role="GENRES" EntitySet="GENRES" />
+      <End Role="MOVIES_GENRES" EntitySet="MOVIES_GENRES" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MOVIES_GENRES_MOVIES" Association="MOVIEADVISORModel.FK_MOVIES_GENRES_MOVIES">
       <End Role="MOVIES" EntitySet="MOVIES" />
+      <End Role="MOVIES_GENRES" EntitySet="MOVIES_GENRES" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="GENRES">
@@ -75,20 +80,20 @@
     </Key>
     <Property Name="ID" Type="Int32" Nullable="false" />
     <Property Name="TITLE" Type="String" Nullable="false" MaxLength="30" Unicode="true" FixedLength="true" />
-    <NavigationProperty Name="MOVIES" Relationship="MOVIEADVISORModel.MOVIES_GENRES" FromRole="GENRES" ToRole="MOVIES" />
+    <NavigationProperty Name="MOVIES_GENRES" Relationship="MOVIEADVISORModel.FK_MOVIES_GENRES_GENRES" FromRole="GENRES" ToRole="MOVIES_GENRES" />
   </EntityType>
   <EntityType Name="MOVIES">
     <Key>
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="Int32" Nullable="false" />
-    <Property Name="TITLE" Type="String" Nullable="false" MaxLength="40" Unicode="true" FixedLength="true" />
-    <Property Name="DESCRIPTION" Type="String" MaxLength="1500" Unicode="true" FixedLength="true" />
+    <Property Name="TITLE" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="true" />
+    <Property Name="DESCRIPTION" Type="String" MaxLength="3000" Unicode="true" FixedLength="true" />
     <Property Name="YEAR" Type="Int32" />
     <NavigationProperty Name="MOVIES_COMMENTS" Relationship="MOVIEADVISORModel.FK_MOVIES_COMMENTS_MOVIES" FromRole="MOVIES" ToRole="MOVIES_COMMENTS" />
     <NavigationProperty Name="MOVIES_PERSONS_ROLES" Relationship="MOVIEADVISORModel.FK_MOVIES_PERSONS_ROLES_MOVIES" FromRole="MOVIES" ToRole="MOVIES_PERSONS_ROLES" />
     <NavigationProperty Name="PICTURES_MOVIES" Relationship="MOVIEADVISORModel.FK_PICTURES_MOVIES_MOVIES" FromRole="MOVIES" ToRole="PICTURES_MOVIES" />
-    <NavigationProperty Name="GENRES" Relationship="MOVIEADVISORModel.MOVIES_GENRES" FromRole="MOVIES" ToRole="GENRES" />
+    <NavigationProperty Name="MOVIES_GENRES" Relationship="MOVIEADVISORModel.FK_MOVIES_GENRES_MOVIES" FromRole="MOVIES" ToRole="MOVIES_GENRES" />
   </EntityType>
   <EntityType Name="MOVIES_COMMENTS">
     <Key>
@@ -149,8 +154,8 @@
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="Int32" Nullable="false" />
-    <Property Name="TITLE" Type="String" Nullable="false" MaxLength="30" Unicode="true" FixedLength="true" />
-    <Property Name="PATH" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="true" />
+    <Property Name="TITLE" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="true" />
+    <Property Name="PATH" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="true" />
     <NavigationProperty Name="PICTURES_MOVIES" Relationship="MOVIEADVISORModel.FK_PICTURES_MOVIES_PICTURES" FromRole="PICTURES" ToRole="PICTURES_MOVIES" />
     <NavigationProperty Name="PICTURES_PERSONS" Relationship="MOVIEADVISORModel.FK_PICTURES_PERSONS_PICTURES" FromRole="PICTURES" ToRole="PICTURES_PERSONS" />
   </EntityType>
@@ -158,7 +163,6 @@
     <Key>
       <PropertyRef Name="MOVIE_ID" />
       <PropertyRef Name="PICTURES_ID" />
-      <PropertyRef Name="IS_POSTER" />
     </Key>
     <Property Name="MOVIE_ID" Type="Int32" Nullable="false" />
     <Property Name="PICTURES_ID" Type="Int32" Nullable="false" />
@@ -169,11 +173,10 @@
   <EntityType Name="PICTURES_PERSONS">
     <Key>
       <PropertyRef Name="PERSON_ID" />
-      <PropertyRef Name="COMMENT_ID" />
-      <PropertyRef Name="IS_POSTER" />
+      <PropertyRef Name="PICTURE_ID" />
     </Key>
     <Property Name="PERSON_ID" Type="Int32" Nullable="false" />
-    <Property Name="COMMENT_ID" Type="Int32" Nullable="false" />
+    <Property Name="PICTURE_ID" Type="Int32" Nullable="false" />
     <Property Name="IS_POSTER" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="PERSONS" Relationship="MOVIEADVISORModel.FK_PICTURES_PERSONS_PERSONS" FromRole="PICTURES_PERSONS" ToRole="PERSONS" />
     <NavigationProperty Name="PICTURES" Relationship="MOVIEADVISORModel.FK_PICTURES_PERSONS_PICTURES" FromRole="PICTURES_PERSONS" ToRole="PICTURES" />
@@ -354,8 +357,39 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="MOVIES_GENRES">
-    <End Role="GENRES" Type="MOVIEADVISORModel.GENRES" Multiplicity="*" />
-    <End Role="MOVIES" Type="MOVIEADVISORModel.MOVIES" Multiplicity="*" />
+  <EntityType Name="MOVIES_GENRES">
+    <Key>
+      <PropertyRef Name="MOVIE_ID" />
+      <PropertyRef Name="GENRE_ID" />
+    </Key>
+    <Property Type="Int32" Name="MOVIE_ID" Nullable="false" />
+    <Property Type="Int32" Name="GENRE_ID" Nullable="false" />
+    <Property Type="String" Name="empty" MaxLength="10" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="GENRES" Relationship="MOVIEADVISORModel.FK_MOVIES_GENRES_GENRES" FromRole="MOVIES_GENRES" ToRole="GENRES" />
+    <NavigationProperty Name="MOVIES" Relationship="MOVIEADVISORModel.FK_MOVIES_GENRES_MOVIES" FromRole="MOVIES_GENRES" ToRole="MOVIES" />
+  </EntityType>
+  <Association Name="FK_MOVIES_GENRES_GENRES">
+    <End Type="MOVIEADVISORModel.GENRES" Role="GENRES" Multiplicity="1" />
+    <End Type="MOVIEADVISORModel.MOVIES_GENRES" Role="MOVIES_GENRES" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GENRES">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="MOVIES_GENRES">
+        <PropertyRef Name="GENRE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MOVIES_GENRES_MOVIES">
+    <End Type="MOVIEADVISORModel.MOVIES" Role="MOVIES" Multiplicity="1" />
+    <End Type="MOVIEADVISORModel.MOVIES_GENRES" Role="MOVIES_GENRES" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MOVIES">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="MOVIES_GENRES">
+        <PropertyRef Name="MOVIE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
   </Association>
 </Schema>

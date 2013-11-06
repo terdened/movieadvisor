@@ -4,36 +4,13 @@
     <EntitySet Name="GENRES" EntityType="MOVIEADVISORModel.Store.GENRES" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="MOVIES" EntityType="MOVIEADVISORModel.Store.MOVIES" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="MOVIES_COMMENTS" EntityType="MOVIEADVISORModel.Store.MOVIES_COMMENTS" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="MOVIES_GENRES" EntityType="MOVIEADVISORModel.Store.MOVIES_GENRES" store:Type="Tables" store:Schema="dbo" store:Name="MOVIES_GENRES">
-      <DefiningQuery>SELECT 
-      [MOVIES_GENRES].[MOVIE_ID] AS [MOVIE_ID], 
-      [MOVIES_GENRES].[GENRE_ID] AS [GENRE_ID]
-      FROM [dbo].[MOVIES_GENRES] AS [MOVIES_GENRES]</DefiningQuery>
-    </EntitySet>
-    <EntitySet Name="MOVIES_PERSONS_ROLES" EntityType="MOVIEADVISORModel.Store.MOVIES_PERSONS_ROLES" store:Type="Tables" store:Schema="dbo" store:Name="MOVIES_PERSONS_ROLES">
-      <DefiningQuery>SELECT 
-      [MOVIES_PERSONS_ROLES].[MOVIE_ID] AS [MOVIE_ID], 
-      [MOVIES_PERSONS_ROLES].[PERSON_ID] AS [PERSON_ID], 
-      [MOVIES_PERSONS_ROLES].[ROLE_ID] AS [ROLE_ID]
-      FROM [dbo].[MOVIES_PERSONS_ROLES] AS [MOVIES_PERSONS_ROLES]</DefiningQuery>
-    </EntitySet>
+    <EntitySet Name="MOVIES_GENRES" EntityType="MOVIEADVISORModel.Store.MOVIES_GENRES" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="MOVIES_PERSONS_ROLES" EntityType="MOVIEADVISORModel.Store.MOVIES_PERSONS_ROLES" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PERSONS" EntityType="MOVIEADVISORModel.Store.PERSONS" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PERSONS_COMMENTS" EntityType="MOVIEADVISORModel.Store.PERSONS_COMMENTS" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PICTURES" EntityType="MOVIEADVISORModel.Store.PICTURES" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="PICTURES_MOVIES" EntityType="MOVIEADVISORModel.Store.PICTURES_MOVIES" store:Type="Tables" store:Schema="dbo" store:Name="PICTURES_MOVIES">
-      <DefiningQuery>SELECT 
-      [PICTURES_MOVIES].[MOVIE_ID] AS [MOVIE_ID], 
-      [PICTURES_MOVIES].[PICTURES_ID] AS [PICTURES_ID], 
-      [PICTURES_MOVIES].[IS_POSTER] AS [IS_POSTER]
-      FROM [dbo].[PICTURES_MOVIES] AS [PICTURES_MOVIES]</DefiningQuery>
-    </EntitySet>
-    <EntitySet Name="PICTURES_PERSONS" EntityType="MOVIEADVISORModel.Store.PICTURES_PERSONS" store:Type="Tables" store:Schema="dbo" store:Name="PICTURES_PERSONS">
-      <DefiningQuery>SELECT 
-      [PICTURES_PERSONS].[PERSON_ID] AS [PERSON_ID], 
-      [PICTURES_PERSONS].[COMMENT_ID] AS [COMMENT_ID], 
-      [PICTURES_PERSONS].[IS_POSTER] AS [IS_POSTER]
-      FROM [dbo].[PICTURES_PERSONS] AS [PICTURES_PERSONS]</DefiningQuery>
-    </EntitySet>
+    <EntitySet Name="PICTURES_MOVIES" EntityType="MOVIEADVISORModel.Store.PICTURES_MOVIES" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PICTURES_PERSONS" EntityType="MOVIEADVISORModel.Store.PICTURES_PERSONS" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ROLES" EntityType="MOVIEADVISORModel.Store.ROLES" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="USERS" EntityType="MOVIEADVISORModel.Store.USERS" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="FK_MOVIES_COMMENTS_MOVIES" Association="MOVIEADVISORModel.Store.FK_MOVIES_COMMENTS_MOVIES">
@@ -109,8 +86,8 @@
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="int" Nullable="false" />
-    <Property Name="TITLE" Type="nchar" Nullable="false" MaxLength="40" />
-    <Property Name="DESCRIPTION" Type="nchar" MaxLength="1500" />
+    <Property Name="TITLE" Type="nchar" Nullable="false" MaxLength="100" />
+    <Property Name="DESCRIPTION" Type="nchar" MaxLength="3000" />
     <Property Name="YEAR" Type="int" />
   </EntityType>
   <EntityType Name="MOVIES_COMMENTS">
@@ -124,9 +101,6 @@
     <Property Name="USER_ID" Type="int" Nullable="false" />
     <Property Name="MOVIE_ID" Type="int" Nullable="false" />
   </EntityType>
-  <!--Ошибки, обнаруженные при создании:
-      предупреждение 6002: В таблице или представлении "C:\USERS\TERDE_000\COURSEWORK\MOVIEADVISOR\MOVIEADVISOR\MOVIEADVISOR\APP_DATA\MOVIEADVISOR.MDF.dbo.MOVIES_GENRES" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.
-      -->
   <EntityType Name="MOVIES_GENRES">
     <Key>
       <PropertyRef Name="MOVIE_ID" />
@@ -134,10 +108,8 @@
     </Key>
     <Property Name="MOVIE_ID" Type="int" Nullable="false" />
     <Property Name="GENRE_ID" Type="int" Nullable="false" />
+    <Property Name="empty" Type="nchar" MaxLength="10" />
   </EntityType>
-  <!--Ошибки, обнаруженные при создании:
-      предупреждение 6002: В таблице или представлении "C:\USERS\TERDE_000\COURSEWORK\MOVIEADVISOR\MOVIEADVISOR\MOVIEADVISOR\APP_DATA\MOVIEADVISOR.MDF.dbo.MOVIES_PERSONS_ROLES" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.
-      -->
   <EntityType Name="MOVIES_PERSONS_ROLES">
     <Key>
       <PropertyRef Name="MOVIE_ID" />
@@ -172,33 +144,25 @@
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="int" Nullable="false" />
-    <Property Name="TITLE" Type="nchar" Nullable="false" MaxLength="30" />
-    <Property Name="PATH" Type="nchar" Nullable="false" MaxLength="50" />
+    <Property Name="TITLE" Type="nchar" Nullable="false" MaxLength="100" />
+    <Property Name="PATH" Type="nchar" Nullable="false" MaxLength="100" />
   </EntityType>
-  <!--Ошибки, обнаруженные при создании:
-      предупреждение 6002: В таблице или представлении "C:\USERS\TERDE_000\COURSEWORK\MOVIEADVISOR\MOVIEADVISOR\MOVIEADVISOR\APP_DATA\MOVIEADVISOR.MDF.dbo.PICTURES_MOVIES" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.
-      -->
   <EntityType Name="PICTURES_MOVIES">
     <Key>
       <PropertyRef Name="MOVIE_ID" />
       <PropertyRef Name="PICTURES_ID" />
-      <PropertyRef Name="IS_POSTER" />
     </Key>
     <Property Name="MOVIE_ID" Type="int" Nullable="false" />
     <Property Name="PICTURES_ID" Type="int" Nullable="false" />
     <Property Name="IS_POSTER" Type="bit" Nullable="false" />
   </EntityType>
-  <!--Ошибки, обнаруженные при создании:
-      предупреждение 6002: В таблице или представлении "C:\USERS\TERDE_000\COURSEWORK\MOVIEADVISOR\MOVIEADVISOR\MOVIEADVISOR\APP_DATA\MOVIEADVISOR.MDF.dbo.PICTURES_PERSONS" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.
-      -->
   <EntityType Name="PICTURES_PERSONS">
     <Key>
       <PropertyRef Name="PERSON_ID" />
-      <PropertyRef Name="COMMENT_ID" />
-      <PropertyRef Name="IS_POSTER" />
+      <PropertyRef Name="PICTURE_ID" />
     </Key>
     <Property Name="PERSON_ID" Type="int" Nullable="false" />
-    <Property Name="COMMENT_ID" Type="int" Nullable="false" />
+    <Property Name="PICTURE_ID" Type="int" Nullable="false" />
     <Property Name="IS_POSTER" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="ROLES">

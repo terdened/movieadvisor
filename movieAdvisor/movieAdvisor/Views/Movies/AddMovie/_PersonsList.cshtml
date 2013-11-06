@@ -1,0 +1,75 @@
+﻿@model movieAdvisor.Models.MovieShow
+
+@{
+    int i=0;
+    bool thereisDirector=false;
+    foreach(var person in Model.personsList)
+    {
+        bool isDirect = false;
+        foreach(var role in person.roles)
+        {
+            if (role.ID == 2)
+            {
+                isDirect = true;
+            }   
+        }
+
+        if (isDirect)
+        {
+            if(!thereisDirector)
+            {
+                <div class="editor-label">
+                    Режиссеры:
+                </div>
+                thereisDirector = true;
+            }
+            <div class="editor-photo">
+                <button type="submit" name="action" id="action" value=@("Удалить"+person.person.ID.ToString())>Удалить</button>
+                <br />
+                <img src=@Url.Content("~/Uploads/" + person.picture.PATH) width="90" height="130" alt=@(person.picture.TITLE) />
+            </div>
+            <div class="editor-label">
+                @Html.DisplayFor(m => m.personsList[i].person.NAME)
+                <input id=@("personsList_" + i + "__person_ID") name=@("personsList[" + i + "].person.ID") type="hidden" value=@(Model.personsList[i].person.ID)>
+                <input id=@("personsList_" + i + "__roles_0__ID") name=@("personsList[" + i + "].roles[0].ID") type="hidden" value=@(Model.personsList[i].roles[0].ID)>
+            </div>
+        }
+        i++;
+    }
+
+    i = 0;
+    bool thereisActor = false;
+    foreach (var person in Model.personsList)
+    {
+        bool isActor = false;
+        foreach (var role in person.roles)
+        {
+            if (role.ID == 1)
+            {
+                isActor = true;
+            }
+        }
+
+        if (isActor)
+        {
+            if (!thereisActor)
+            {
+                <div class="editor-label">
+                    Актеры:
+                </div>
+                thereisActor = true;
+            }
+            <div class="editor-photo">
+                <button type="submit" name="action" id="action" value=@("Удалить"+person.person.ID.ToString())>Удалить</button>
+                <br />
+                <img src=@Url.Content("~/Uploads/" + person.picture.PATH) width="90" height="130" alt=@(person.picture.TITLE) />
+            </div>
+            <div class="editor-label">
+                @Html.DisplayFor(m => m.personsList[i].person.NAME)
+                <input id=@("personsList_" + i + "__person_ID") name=@("personsList[" + i + "].person.ID") type="hidden" value=@(Model.personsList[i].person.ID)>
+                <input id=@("personsList_" + i + "__roles_0__ID") name=@("personsList[" + i + "].roles[0].ID") type="hidden" value=@(Model.personsList[i].roles[0].ID)>
+            </div>
+        }
+        i++;   
+    }
+}

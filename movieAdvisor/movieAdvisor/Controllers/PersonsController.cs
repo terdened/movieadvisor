@@ -19,28 +19,21 @@ namespace movieAdvisor.Controllers
 
         public ActionResult Show(int id)
         {
-            MOVIEADVISOREntities5 entities = new MOVIEADVISOREntities5();
+            MOVIEADVISOREntities6 entities = new MOVIEADVISOREntities6();
             PersonShow model = new PersonShow(entities.PERSONS.Where(p => p.ID == id).FirstOrDefault());
             return View(model);
         }
 
-        [HttpGet]
-        public ActionResult Find()
-        {
-            List<PersonsListItem> model = new List<PersonsListItem>();
-            return View(model);
-        }
 
-        [HttpPost]
-        public ActionResult Find(string keyWord)
+        public ActionResult Find(string keyWord="")
         {
-            MOVIEADVISOREntities5 entities = new MOVIEADVISOREntities5();
-            List<PERSONS> tempPersonsHolder = entities.PERSONS.ToList();
+            MOVIEADVISOREntities6 entities = new MOVIEADVISOREntities6();
+            List<PERSONS> tempPersonsHolder = entities.PERSONS.OrderByDescending(p=>p.MOVIES_PERSONS_ROLES.Count()).ToList();
             List<PersonsListItem> model = new List<PersonsListItem>();
 
             foreach (var person in tempPersonsHolder)
             {
-                if (person.NAME.ToLower().IndexOf(keyWord.ToLower()) > -1)
+                if ((person.NAME.ToLower().IndexOf(keyWord.ToLower()) > -1) && (model.Count<20))
                     model.Add(new PersonsListItem(person));
             }
 
@@ -49,7 +42,7 @@ namespace movieAdvisor.Controllers
 
         public ActionResult AddComment(string commentText, int personId)
         {
-            MOVIEADVISOREntities5 entities = new MOVIEADVISOREntities5();
+            MOVIEADVISOREntities6 entities = new MOVIEADVISOREntities6();
             PERSONS_COMMENTS tempComment = new PERSONS_COMMENTS();
 
             tempComment.PERSON_ID = personId;
@@ -61,6 +54,93 @@ namespace movieAdvisor.Controllers
             entities.SaveChanges();
 
             return RedirectToAction("Show", new { id = personId });
+        }
+
+        [HttpGet]
+        public ActionResult AddPerson(int id = 0)
+        {
+            PersonShow model = new PersonShow();
+            List<SelectListItem> movies = new List<SelectListItem>();
+            List<SelectListItem> roles = new List<SelectListItem>();
+            MOVIEADVISOREntities6 entities = new MOVIEADVISOREntities6();
+            List<MOVIES> tempMoviesHolder = entities.MOVIES.ToList();
+
+            model.person.NAME = "Имя";
+            model.person.DESCRIPTION = "Описание";
+
+            if (id != 0)
+            {
+                model = new PersonShow(entities.PERSONS.Where(m => m.ID == id).First());
+            }
+
+            foreach (var mov in tempMoviesHolder)
+            {
+                movies.Add(new SelectListItem() { Text = mov.TITLE, Value = mov.ID.ToString() });
+            }
+
+            ViewBag.movies = movies.AsEnumerable();
+            List<ROLES> tempRolesHolder = entities.ROLES.ToList();
+
+            foreach (var role in tempRolesHolder)
+            {
+                roles.Add(new SelectListItem() { Text = role.TITLE, Value = role.ID.ToString() });
+            }
+            ViewBag.roles = roles.AsEnumerable();
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult AddPerson(PersonShow model, string action, string movie = null, string role = null, HttpPostedFileBase foto = null, HttpPostedFileBase poster = null)
+        {
+            MOVIEADVISOREntities6 entities = new MOVIEADVISOREntities6();
+            PersonCreator creator = new PersonCreator();
+            model = creator.update(model, action, foto, poster, Server, movie, role);
+
+
+            List<SelectListItem> movies = new List<SelectListItem>();
+            List<SelectListItem> roles = new List<SelectListItem>();
+            List<MOVIES> tempMoviesHolder = entities.MOVIES.ToList();
+
+            foreach (var mov in tempMoviesHolder)
+            {
+                bool isFree = true;
+                foreach (var mov1 in model.moviesList)
+                {
+                    if (mov.ID == mov1.movie.ID)
+                        isFree = false;
+                }
+
+                if (isFree)
+                    movies.Add(new SelectListItem() { Text = mov.TITLE, Value = mov.ID.ToString() });
+            }
+
+            ViewBag.movies = movies.AsEnumerable();
+
+            List<ROLES> tempRolesHolder = entities.ROLES.ToList();
+
+            foreach (var rol in tempRolesHolder)
+            {
+                roles.Add(new SelectListItem() { Text = rol.TITLE, Value = rol.ID.ToString() });
+            }
+
+            ViewBag.roles = roles.AsEnumerable();
+
+            if (action == "Сохранить")
+                return RedirectToAction("Index");
+
+            return View(model);
+        }
+
+
+        public ActionResult DelPerson(int id = 0)
+        {
+
+            MOVIEADVISOREntities6 entities = new MOVIEADVISOREntities6();
+            PersonCreator creator = new PersonCreator();
+            creator.RemovePerson(entities.PERSONS.Where(m => m.ID == id).First());
+
+            return RedirectToAction("Index");
         }
 
     }

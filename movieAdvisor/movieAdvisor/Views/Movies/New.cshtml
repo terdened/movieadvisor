@@ -1,6 +1,10 @@
 ﻿@model List<movieAdvisor.Models.MoviesListItem>
 
 @{
+    if (Roles.IsUserInRole(User.Identity.Name, "admin"))
+    {
+        Layout = Url.Content("../Shared/_AdminLayout.cshtml");
+    }
     ViewBag.Title = "Последние добавления";
 }
 
@@ -11,9 +15,19 @@
     <table width="100%">
         <tr>
             <td width="100%" align="center">
-                <div class="editor-label">
+                <div class="editor-label" style="display:inline">
                     @Html.ActionLink(movie.movie.TITLE, "Show", new { id = movie.movie.ID })
-                </div>
+                    @{
+    if (Roles.IsUserInRole(User.Identity.Name, "admin"))
+    {
+                            @Html.ActionLink(" [Изменить]", "AddMovie", new { id = movie.movie.ID })
+    }
+    if (Roles.IsUserInRole(User.Identity.Name, "admin"))
+    {
+                            @Html.ActionLink(" [Удалить]", "DelMovie", new { id = movie.movie.ID })
+    }
+                    }
+                </div> 
             </td>
         </tr>
     </table>
@@ -21,10 +35,26 @@
         <tr>
             <td width="20%" align="center">
                 <div class="editor-poster">
-                    <img src="@Url.Content("~/Uploads/"+movie.poster)"/ width="185" height="273" alt="@movie.alt">
+                    <img src="@Url.Content("~/Uploads/" + movie.poster)"/ width="185" height="273" alt="@movie.alt">
                 </div>
             </td>
             <td width="80%" valign="top">
+                <div>
+                    @Html.Partial("Find/_GenresList", movie)
+                </div>
+                <div>
+                @{
+                    try
+                    {
+                        <p>
+                            Год выпуска: @Html.ActionLink(movie.movie.YEAR.ToString(), "FindPost", new { year = movie.movie.YEAR })
+                        </p>
+                    }
+                    catch
+                    {
+                    }    
+                }
+                </div>
                 <div class="editor-description">
                     <p>
                         Описание:
