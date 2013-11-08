@@ -8,25 +8,32 @@
     ViewBag.Title = "Поиск фильмов";
 }
 
+
+
+
+
+
 <h2>Поиск фильмов</h2>
 
-@using(Html.BeginForm("FindPost","Movies",FormMethod.Post))
+@using (Html.BeginForm("FindPost", "Movies", FormMethod.Post))
 {
-    List<SelectListItem> years=new List<SelectListItem>();
+    List<SelectListItem> years = new List<SelectListItem>();
     List<SelectListItem> genres = ViewBag.genres;
-        years.Add(new SelectListItem() { Text = "Любой", Value = "0" });
-    for(int i=2013; i>1960;i--)
+    years.Add(new SelectListItem() { Text = "Любой", Value = "0" });
+    for (int i = 2013; i > 1960; i--)
     {
-        years.Add(new SelectListItem() { Text=i.ToString(), Value=i.ToString()});
+        years.Add(new SelectListItem() { Text = i.ToString(), Value = i.ToString() });
     }
     
-    @:Ключевое слово: 
-    <input type="text" name="keyWord" id="keyWord" />
-    @: Год выпуска: 
-    @Html.DropDownList("year",years)
-    @: Жанр: 
-    @Html.DropDownList("genre", genres)
-    <input type="submit" />
+    <div align="center">
+        Ключевое слово: 
+        <input type="text" name="keyWord" id="keyWord" />
+        Год выпуска: 
+        @Html.DropDownList("year", years)
+        Жанр: 
+        @Html.DropDownList("genre", genres)
+        <input type="submit" />
+    </div>
 }
 
 @foreach (var movie in Model)
@@ -57,6 +64,14 @@
                 <div class="editor-poster">
                     <img src="@Url.Content("~/Uploads/" + movie.poster)"/ width="185" height="273" alt="@movie.alt">
                 </div>
+                    @Html.Partial("Find/_Rating",movie)
+                <div>
+                <br />
+                @if (movie.raiting > 0)
+                {
+                    @Math.Round(movie.raiting, 1)
+                }
+                </div>
             </td>
             <td width="80%" valign="top">
                 <div>
@@ -81,6 +96,7 @@
                         @movie.movie.DESCRIPTION
                     </p>
                 </div>
+                    @Html.Partial("Find/_MovieRating", movie)
             </td>
         </tr>
     </table>

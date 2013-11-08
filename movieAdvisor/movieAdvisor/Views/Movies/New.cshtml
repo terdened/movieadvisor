@@ -37,6 +37,14 @@
                 <div class="editor-poster">
                     <img src="@Url.Content("~/Uploads/" + movie.poster)"/ width="185" height="273" alt="@movie.alt">
                 </div>
+                    @Html.Partial("Find/_Rating",movie)
+                <div>
+                <br />
+                @if (movie.raiting > 0)
+                {
+                    @Math.Round(movie.raiting, 1)
+                }
+                </div>
             </td>
             <td width="80%" valign="top">
                 <div>
@@ -63,6 +71,7 @@
                         @movie.movie.DESCRIPTION
                     </p>
                 </div>
+                    @Html.Partial("Find/_MovieRating", movie)
             </td>
         </tr>
     </table>

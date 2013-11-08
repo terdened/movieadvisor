@@ -27,16 +27,48 @@ namespace movieAdvisor.Controllers
             {
                 foreach (var movie in tempHolder.GetRange(tempHolder.Count - 20, 20))
                 {
-
                     model.Add(new MoviesListItem(movie));
+                    var tempRating = movie.MOVIES_COMMENTS.Where(mc => mc.MARK != null);
+                    double raiting = 0;
+                    foreach (var rai in tempRating)
+                    {
+                        raiting += (double)rai.MARK;
+                        if (User.Identity.Name != "")
+                        {
+                            if (rai.USER_ID == entities.USERS.Where(u => u.USERNAME == User.Identity.Name).First().ID)
+                            {
+                                model.Last().isRaited = true;
+                                model.Last().yourMark = (int)rai.MARK;
+                            }
+                        }
+                    }
+                    raiting /= tempRating.Count();
+
+                    model.Last().raiting = raiting;
                 }
             }
             else
             {
                 foreach (var movie in tempHolder)
                 {
-
                     model.Add(new MoviesListItem(movie));
+                    var tempRating = movie.MOVIES_COMMENTS.Where(mc => mc.MARK != null);
+                    double raiting = 0;
+                    foreach (var rai in tempRating)
+                    {
+                        raiting += (double)rai.MARK;
+                        if (User.Identity.Name != "")
+                        {
+                            if (rai.USER_ID == entities.USERS.Where(u => u.USERNAME == User.Identity.Name).First().ID)
+                            {
+                                model.Last().isRaited = true;
+                                model.Last().yourMark = (int)rai.MARK;
+                            }
+                        }
+                    }
+                    raiting /= tempRating.Count();
+
+                    model.Last().raiting = raiting;
                 }
             }
             model=model.OrderByDescending(m => m.movie.ID).ToList();
@@ -102,8 +134,27 @@ namespace movieAdvisor.Controllers
                     else
                         match = false;
                 }
-                if((match)&&(model.Count<20))
+                if ((match) && (model.Count < 20))
+                {
                     model.Add(new MoviesListItem(movie));
+                    var tempRating = movie.MOVIES_COMMENTS.Where(mc => mc.MARK != null);
+                    double raiting = 0;
+                    foreach(var rai in tempRating)
+                    {
+                        raiting += (double)rai.MARK;
+                        if (User.Identity.Name != "")
+                        {
+                            if (rai.USER_ID == entities.USERS.Where(u => u.USERNAME == User.Identity.Name).First().ID)
+                            {
+                                model.Last().isRaited = true;
+                                model.Last().yourMark = (int)rai.MARK;
+                            }
+                        }
+                    }
+                    raiting /= tempRating.Count();
+
+                    model.Last().raiting = raiting;
+                }
             }
 
             return View("Find",model);
@@ -245,6 +296,21 @@ namespace movieAdvisor.Controllers
             creator.RemoveMovie(entities.MOVIES.Where(m => m.ID == id).First());
 
             return RedirectToAction("New");
+        }
+
+        public ActionResult UpdateRatingFind(string value, string keyWord="", int genre=0, int year=0)
+        {
+            MOVIEADVISOREntities6 entities = new MOVIEADVISOREntities6();
+            MOVIES_COMMENTS tempComment = new MOVIES_COMMENTS();
+            int rating = Int32.Parse(value.Split('/').Last());
+            tempComment.ID = entities.MOVIES_COMMENTS.OrderByDescending(mc=>mc.ID).First().ID+1;
+            tempComment.MARK = rating;
+            tempComment.USER_ID = entities.USERS.Where(u => u.USERNAME == User.Identity.Name).First().ID;
+            tempComment.MOVIE_ID = Int32.Parse(value.Split('/').First());
+            entities.MOVIES_COMMENTS.AddObject(tempComment);
+            entities.SaveChanges();
+
+            return RedirectToAction("FindPost",new { keyWord = keyWord, genre = genre, year = year });
         }
     }
 }

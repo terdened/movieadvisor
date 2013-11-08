@@ -1,0 +1,17 @@
+﻿@model movieAdvisor.Models.MoviesListItem
+
+<div align="center" style="padding-left:55px">
+    @{
+        for (int i = 1; i <= 50; i++)
+        {
+            if (i == (int)Model.raiting * 5)
+            {
+                @:<input name=@("starD" + Model.movie.ID) type="radio" class="star {split:5}" value=@(i) disabled="disabled" checked="checked"/>
+            }
+            else
+            {
+                @:<input name=@("starD" + Model.movie.ID) type="radio" class="star {split:5}" value=@(i) disabled="disabled"/>
+            }
+        }   
+    }
+</div>

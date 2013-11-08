@@ -46,7 +46,7 @@ namespace movieAdvisor.Models
                 personsList.Last().SetRole(movie);
             }
 
-            comments = entities.MOVIES_COMMENTS.Where(mc => mc.MOVIE_ID == movie.ID).ToList();
+            comments = entities.MOVIES_COMMENTS.Where(mc => mc.MOVIE_ID == movie.ID && mc.TEXT != null ).ToList();
             genres = new List<GENRES>();
             foreach (var gen in this.movie.MOVIES_GENRES)
             {
