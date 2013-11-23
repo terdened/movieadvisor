@@ -1,0 +1,18 @@
+﻿@model movieAdvisor.Models.MovieShow
+           
+<p>
+    Жанры:
+</p>
+@{
+    <div style="display:inline">
+    @foreach(var genre in Model.genres)
+    {
+        @Html.ActionLink(genre.TITLE, "Find", new { genre = genre.ID })
+
+        if (genre != Model.genres.Last())
+        {
+            @:,  
+        }
+    }
+    </div>
+}

@@ -186,7 +186,6 @@ namespace movieAdvisor.Models
                 result.moviesList.Remove(result.moviesList.Where(p => p.movie.ID == tempId).First());
             }
             
-
             return result;
         }
     }

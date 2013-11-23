@@ -1,7 +1,7 @@
 ﻿@model movieAdvisor.Models.MovieShow
 
 @{
-    if(Roles.IsUserInRole(User.Identity.Name,"admin"))
+    if (Roles.IsUserInRole(User.Identity.Name, "admin"))
     {
         Layout = Url.Content("../Shared/_AdminLayout.cshtml");
     }
@@ -31,11 +31,11 @@
                 <div class="editor-label" style="display:inline">
                     <h2 style="display:inline">@Model.movie.TITLE</h2>
                     @{
-                        if (Roles.IsUserInRole(User.Identity.Name,"admin"))
+                        if (Roles.IsUserInRole(User.Identity.Name, "admin"))
                         {
                             @Html.ActionLink(" [Изменить]", "AddMovie", new { id = Model.movie.ID })
                         }
-                        if (Roles.IsUserInRole(User.Identity.Name,"admin"))
+                        if (Roles.IsUserInRole(User.Identity.Name, "admin"))
                         {
                             @Html.ActionLink(" [Удалить]", "DelMovie", new { id = Model.movie.ID })
                         }
@@ -99,7 +99,7 @@
                                                <table width="100%">
                                                    <tr>
                                                        <td width="100%">
-                                                       Дата:
+                                                       Дата: @comment.DATE @Html.ActionLink("[Ответить]", "respond", new { id = Model.movie.ID, prewId = comment.ID })
                                                        </td>
                                                    </tr>
                                                    <tr>
@@ -107,6 +107,22 @@
                                                        @comment.TEXT
                                                        </td>
                                                    </tr>
+                                                   @{
+                                                       if(comment.PREV_COMMENT_ID!=null)
+                                                       {
+                                                           int current = (int)comment.PREV_COMMENT_ID;
+                                                           <tr>
+                                                               <td>
+                                                               Ответ на:
+                                                               </td>
+                                                           </tr>
+                                                            <tr>
+                                                               <td>
+                                                               @Model.comments.Where(c => c.ID == current).First().TEXT
+                                                               </td>
+                                                           </tr>
+                                                       }
+                                                   }
                                                </table>
                                            </td>
                                        </tr> 
@@ -120,13 +136,31 @@
                             @{
                                 if (User.Identity.IsAuthenticated)
                                 {
-                                    using (Html.BeginForm("AddComment", "Movies", FormMethod.Get, new { width = "100%" }))
+                                    if (ViewBag.prewComment != null)
                                     {
-                                        @:Оставить отзыв:
-                                        <textarea rows="5" id = "commentText" name="commentText" style="width:100%"></textarea>
-                                        <br />
-                                        <input type=hidden id = "movieId" name="movieId" value=@(Model.movie.ID) />
-                                        <input type=submit title="Оставить" align="right" />
+                                        using (Html.BeginForm("AddComment", "Movies", FormMethod.Get, new { width = "100%" }))
+                                        {
+                                            <input type="hidden" id = "prevComment" name="prevComment" value=@(ViewBag.prewComment.ID) />
+                                            @ViewBag.prewComment.TEXT
+                                            <br />
+                                            @:Оставить отзыв:
+                                            <textarea rows="5" id = "commentText" name="commentText" style="width:100%"></textarea>
+                                            <br />
+                                            <input type="hidden" id = "movieId" name="movieId" value=@(Model.movie.ID) />
+                                            <input type="submit" title = "Оставить" align="right" />
+                                        }
+                                    }
+                                    else
+                                    {
+                                        using (Html.BeginForm("AddComment", "Movies", FormMethod.Get, new { width = "100%" }))
+                                        {
+                                
+                                            @:Оставить отзыв:
+                                            <textarea rows="5" id = "commentText" name="commentText" style="width:100%"></textarea>
+                                            <br />
+                                            <input type="hidden" id = "movieId" name="movieId" value=@(Model.movie.ID) />
+                                            <input type="submit" title = "Оставить" align="right" />
+                                        }
                                     }
                                 }
                                 else

@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Scripts/jquery.rating.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/jquery.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.form.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.MetaData.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.rating.js")" type="text/javascript"></script>
+
+    
+</head>
+<body>
+    <div class="page">
+        <div id="header">
+            <div id="title">
+                <h1>Movie advisor</h1>
+            </div>
+            <div id="logindisplay">
+                @Html.Partial("_LogOnPartial")
+            </div>
+            <div id="menucontainer">
+                <ul id="menu">
+                    <li>@Html.ActionLink("Домашняя страница", "Index", "Home")</li>
+                    <li>@Html.ActionLink("+", "AddMovie", "Movies")</li>
+                    <li>@Html.ActionLink("Поиск фильмов", "Find", "Movies")</li>
+                    <li>@Html.ActionLink("+", "AddPerson", "Persons")</li>
+                    <li>@Html.ActionLink("Поиск личностей", "Find", "Persons")</li>
+                    <li>@Html.ActionLink("Последнии добавления", "New", "Movies")</li>
+                    <li>@Html.ActionLink("О программе", "About", "Home")</li>
+                </ul>
+            </div>
+        </div>
+        <div id="main">
+            @RenderBody()
+        </div>
+        <div id="footer">
+        </div>
+    </div>
+</body>
+</html>

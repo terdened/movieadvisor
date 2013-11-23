@@ -1,0 +1,28 @@
+﻿@model movieAdvisor.Models.MovieShow
+           
+<p>
+    Жанры:
+</p>
+@{
+    <div style="display:inline">
+    @{
+        int i=0;
+        foreach(var genre in Model.genres)
+        {
+            @:<button type="submit" name="action" id="action" value=@("УдалитьЖанр" + genre.ID)>X</button>
+            @Html.DisplayFor(m=>m.genres[i].TITLE)
+            @:<input id=@("genres_" + i + "__ID") name=@("genres[" + i + "].ID") type="hidden" value=@(genre.ID)>
+            i++; 
+        }
+    }
+    </div>
+    
+    <div style="display:inline">
+        @{
+            List<SelectListItem> genres=ViewBag.genres;
+        }
+        @Html.DropDownList("genre", genres)
+
+        <button type="submit" name="action" id="action" value="Добавить жанр">Добавить жанр</button>
+    </div>
+}

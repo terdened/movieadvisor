@@ -49,6 +49,7 @@ namespace movieAdvisor.Controllers
             tempComment.TEXT = commentText;
             tempComment.USER_ID = entities.USERS.Where(u => u.USERNAME == User.Identity.Name).First().ID;
             tempComment.MARK = 10;
+            tempComment.DATE = DateTime.Now;
             tempComment.ID = entities.PERSONS_COMMENTS.OrderByDescending(pc => pc.ID).First().ID + 1;
             entities.PERSONS_COMMENTS.AddObject(tempComment);
             entities.SaveChanges();

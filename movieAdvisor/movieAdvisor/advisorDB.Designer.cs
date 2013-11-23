@@ -892,6 +892,30 @@ namespace movieAdvisor
         private global::System.Int32 _MOVIE_ID;
         partial void OnMOVIE_IDChanging(global::System.Int32 value);
         partial void OnMOVIE_IDChanged();
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> DATE
+        {
+            get
+            {
+                return _DATE;
+            }
+            set
+            {
+                OnDATEChanging(value);
+                ReportPropertyChanging("DATE");
+                _DATE = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DATE");
+                OnDATEChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _DATE;
+        partial void OnDATEChanging(Nullable<global::System.DateTime> value);
+        partial void OnDATEChanged();
 
         #endregion
 
@@ -1813,6 +1837,30 @@ namespace movieAdvisor
         private global::System.Int32 _PERSON_ID;
         partial void OnPERSON_IDChanging(global::System.Int32 value);
         partial void OnPERSON_IDChanged();
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> DATE
+        {
+            get
+            {
+                return _DATE;
+            }
+            set
+            {
+                OnDATEChanging(value);
+                ReportPropertyChanging("DATE");
+                _DATE = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DATE");
+                OnDATEChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _DATE;
+        partial void OnDATEChanging(Nullable<global::System.DateTime> value);
+        partial void OnDATEChanged();
 
         #endregion
 

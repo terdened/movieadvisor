@@ -109,6 +109,7 @@
     <NavigationProperty Name="MOVIES_COMMENTS1" Relationship="MOVIEADVISORModel.FK_MOVIES_COMMENTS_MOVIES_COMMENTS" FromRole="MOVIES_COMMENTS" ToRole="MOVIES_COMMENTS1" />
     <NavigationProperty Name="MOVIES_COMMENTS2" Relationship="MOVIEADVISORModel.FK_MOVIES_COMMENTS_MOVIES_COMMENTS" FromRole="MOVIES_COMMENTS1" ToRole="MOVIES_COMMENTS" />
     <NavigationProperty Name="USERS" Relationship="MOVIEADVISORModel.FK_MOVIES_COMMENTS_USERS" FromRole="MOVIES_COMMENTS" ToRole="USERS" />
+    <Property Type="DateTime" Name="DATE" />
   </EntityType>
   <EntityType Name="MOVIES_PERSONS_ROLES">
     <Key>
@@ -148,6 +149,7 @@
     <NavigationProperty Name="PERSONS_COMMENTS1" Relationship="MOVIEADVISORModel.FK_PERSONS_COMMENTS_PERSONS_COMMENTS" FromRole="PERSONS_COMMENTS" ToRole="PERSONS_COMMENTS1" />
     <NavigationProperty Name="PERSONS_COMMENTS2" Relationship="MOVIEADVISORModel.FK_PERSONS_COMMENTS_PERSONS_COMMENTS" FromRole="PERSONS_COMMENTS1" ToRole="PERSONS_COMMENTS" />
     <NavigationProperty Name="USERS" Relationship="MOVIEADVISORModel.FK_PERSONS_COMMENTS_USERS" FromRole="PERSONS_COMMENTS" ToRole="USERS" />
+    <Property Type="DateTime" Name="DATE" />
   </EntityType>
   <EntityType Name="PICTURES">
     <Key>

@@ -1,0 +1,17 @@
+﻿@model movieAdvisor.Models.PersonShow
+
+<div class="editor-glarey" style="display:inline" >
+    @{
+            int j = 0;
+            foreach (var pic in Model.picturesList)
+            {
+                <div class="editor-photo" style="display:inline">
+                    <button type="submit" name="action" id="action" value=@("УдалитьФото" + pic.ID.ToString()) >Удалить</button>
+                    <input id=@("picturesList_" + j + "__ID") name=@("picturesList[" + j + "].ID") type="hidden" value=@(Model.picturesList[j].ID)>
+                    <input id=@("picturesList_" + j + "__PATH") name=@("picturesList[" + j + "].PATH") type="hidden" value=@(Model.picturesList[j].PATH)>
+                    <img id="photo" src="@Url.Content("~/Uploads/" + pic.PATH)"/ width="160" height="120" alt="@pic.TITLE">                          
+                </div>
+                j++;
+            }
+    }
+</div>

@@ -1,0 +1,62 @@
+﻿@model List<movieAdvisor.Models.PersonsListItem>
+
+@{
+    if (Roles.IsUserInRole(User.Identity.Name, "admin"))
+    {
+        Layout = Url.Content("../Shared/_AdminLayout.cshtml");
+    }
+    ViewBag.Title = "Поиск личностей";
+}
+
+<h2>Поиск личностей</h2>
+
+@using(Html.BeginForm("Find","Persons",FormMethod.Post))
+{
+    @:Поиск
+    <input type="text" name="keyWord" id="keyWord" />
+    <input type="submit" />
+}
+
+@foreach (var person in Model)
+{
+    <table width="100%">
+        <tr>
+            <td width="100%" align="center">
+                <div class="editor-label">
+                    @Html.ActionLink(person.person.NAME, "Show", new { id = person.person.ID })
+                    @{
+                        if (Roles.IsUserInRole(User.Identity.Name,"admin"))
+                        {
+                            @Html.ActionLink("[Изменить]", "AddPerson", new { id = person.person.ID  })
+                        }
+                        if (Roles.IsUserInRole(User.Identity.Name,"admin"))
+                        {
+                            @Html.ActionLink(" [Удалить]", "DelPerson", new { id = person.person.ID  })
+                        }
+                    }
+                </div>
+            </td>
+        </tr>
+    </table>
+    <table width="100%">
+        <tr>
+            <td width="20%" align="center">
+                <div class="editor-poster">
+                    <img src="@Url.Content("~/Uploads/" + person.poster)"/ width="185" height="273" alt="@person.alt">
+                </div>
+            </td>
+            <td width="80%" valign="top">
+                <div class="editor-description">
+                    <p>
+                        Описание:
+                    </p>
+                    <p>
+                        @person.person.DESCRIPTION
+                    </p>
+                </div>
+            </td>
+        </tr>
+    </table>
+}
+
+

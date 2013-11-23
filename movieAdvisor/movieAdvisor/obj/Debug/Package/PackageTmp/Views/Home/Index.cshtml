@@ -1,0 +1,12 @@
+﻿@{
+    if (Roles.IsUserInRole(User.Identity.Name, "admin"))
+    {
+        Layout = Url.Content("../Shared/_AdminLayout.cshtml");
+    }
+    ViewBag.Title = "Домашняя страница";
+}
+
+<h2>@ViewBag.Message</h2>
+<p>
+    Всякая писатня.   
+</p>

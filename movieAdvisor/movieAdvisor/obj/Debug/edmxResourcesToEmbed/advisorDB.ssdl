@@ -100,6 +100,7 @@
     <Property Name="PREV_COMMENT_ID" Type="int" />
     <Property Name="USER_ID" Type="int" Nullable="false" />
     <Property Name="MOVIE_ID" Type="int" Nullable="false" />
+    <Property Name="DATE" Type="datetime" />
   </EntityType>
   <EntityType Name="MOVIES_GENRES">
     <Key>
@@ -138,6 +139,7 @@
     <Property Name="PREV_COMMENT_ID" Type="int" />
     <Property Name="USER_ID" Type="int" Nullable="false" />
     <Property Name="PERSON_ID" Type="int" Nullable="false" />
+    <Property Name="DATE" Type="date" />
   </EntityType>
   <EntityType Name="PICTURES">
     <Key>

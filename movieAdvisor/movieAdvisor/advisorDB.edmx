@@ -105,6 +105,7 @@
           <Property Name="PREV_COMMENT_ID" Type="int" />
           <Property Name="USER_ID" Type="int" Nullable="false" />
           <Property Name="MOVIE_ID" Type="int" Nullable="false" />
+          <Property Name="DATE" Type="datetime" />
         </EntityType>
         <EntityType Name="MOVIES_GENRES">
           <Key>
@@ -143,6 +144,7 @@
           <Property Name="PREV_COMMENT_ID" Type="int" />
           <Property Name="USER_ID" Type="int" Nullable="false" />
           <Property Name="PERSON_ID" Type="int" Nullable="false" />
+          <Property Name="DATE" Type="date" />
         </EntityType>
         <EntityType Name="PICTURES">
           <Key>
@@ -480,6 +482,7 @@
           <NavigationProperty Name="MOVIES_COMMENTS1" Relationship="MOVIEADVISORModel.FK_MOVIES_COMMENTS_MOVIES_COMMENTS" FromRole="MOVIES_COMMENTS" ToRole="MOVIES_COMMENTS1" />
           <NavigationProperty Name="MOVIES_COMMENTS2" Relationship="MOVIEADVISORModel.FK_MOVIES_COMMENTS_MOVIES_COMMENTS" FromRole="MOVIES_COMMENTS1" ToRole="MOVIES_COMMENTS" />
           <NavigationProperty Name="USERS" Relationship="MOVIEADVISORModel.FK_MOVIES_COMMENTS_USERS" FromRole="MOVIES_COMMENTS" ToRole="USERS" />
+          <Property Type="DateTime" Name="DATE" />
         </EntityType>
         <EntityType Name="MOVIES_PERSONS_ROLES">
           <Key>
@@ -519,6 +522,7 @@
           <NavigationProperty Name="PERSONS_COMMENTS1" Relationship="MOVIEADVISORModel.FK_PERSONS_COMMENTS_PERSONS_COMMENTS" FromRole="PERSONS_COMMENTS" ToRole="PERSONS_COMMENTS1" />
           <NavigationProperty Name="PERSONS_COMMENTS2" Relationship="MOVIEADVISORModel.FK_PERSONS_COMMENTS_PERSONS_COMMENTS" FromRole="PERSONS_COMMENTS1" ToRole="PERSONS_COMMENTS" />
           <NavigationProperty Name="USERS" Relationship="MOVIEADVISORModel.FK_PERSONS_COMMENTS_USERS" FromRole="PERSONS_COMMENTS" ToRole="USERS" />
+          <Property Type="DateTime" Name="DATE" />
         </EntityType>
         <EntityType Name="PICTURES">
           <Key>
@@ -790,6 +794,7 @@
           <EntitySetMapping Name="MOVIES_COMMENTS">
             <EntityTypeMapping TypeName="MOVIEADVISORModel.MOVIES_COMMENTS">
               <MappingFragment StoreEntitySet="MOVIES_COMMENTS">
+                <ScalarProperty Name="DATE" ColumnName="DATE" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="TEXT" ColumnName="TEXT" />
                 <ScalarProperty Name="MARK" ColumnName="MARK" />
@@ -820,6 +825,7 @@
           <EntitySetMapping Name="PERSONS_COMMENTS">
             <EntityTypeMapping TypeName="MOVIEADVISORModel.PERSONS_COMMENTS">
               <MappingFragment StoreEntitySet="PERSONS_COMMENTS">
+                <ScalarProperty Name="DATE" ColumnName="DATE" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="TEXT" ColumnName="TEXT" />
                 <ScalarProperty Name="MARK" ColumnName="MARK" />
@@ -907,7 +913,7 @@
       <Diagram Name="advisorDB">
         <EntityTypeShape EntityType="MOVIEADVISORModel.GENRES" Width="1.5" PointX="0.75" PointY="14.875" Height="1.5956835937499996" IsExpanded="true" />
         <EntityTypeShape EntityType="MOVIEADVISORModel.MOVIES" Width="1.5" PointX="0.75" PointY="9.25" Height="2.5571907552083317" IsExpanded="true" />
-        <EntityTypeShape EntityType="MOVIEADVISORModel.MOVIES_COMMENTS" Width="1.5" PointX="6" PointY="8.625" Height="2.9417936197916639" IsExpanded="true" />
+        <EntityTypeShape EntityType="MOVIEADVISORModel.MOVIES_COMMENTS" Width="1.5" PointX="6.25" PointY="9" Height="3.1340950520833317" IsExpanded="true" />
         <EntityTypeShape EntityType="MOVIEADVISORModel.MOVIES_PERSONS_ROLES" Width="1.5" PointX="3" PointY="4.625" Height="2.1725878906249996" IsExpanded="true" />
         <EntityTypeShape EntityType="MOVIEADVISORModel.PERSONS" Width="1.5" PointX="0.75" PointY="4.625" Height="2.1725878906249996" IsExpanded="true" />
         <EntityTypeShape EntityType="MOVIEADVISORModel.PERSONS_COMMENTS" Width="1.5" PointX="6.5" PointY="4.25" Height="2.9417936197916656" IsExpanded="true" />
@@ -917,12 +923,12 @@
         <EntityTypeShape EntityType="MOVIEADVISORModel.ROLES" Width="1.5" PointX="2.875" PointY="12.875" Height="1.5956835937499978" IsExpanded="true" />
         <EntityTypeShape EntityType="MOVIEADVISORModel.USERS" Width="1.5" PointX="3.75" PointY="8.5" Height="2.3648893229166674" IsExpanded="true" />
         <AssociationConnector Association="MOVIEADVISORModel.FK_MOVIES_COMMENTS_MOVIES" ManuallyRouted="false">
-          <ConnectorPoint PointX="2.25" PointY="11.115641109212239" />
-          <ConnectorPoint PointX="3.0768235416666667" PointY="11.115641109212239" />
-          <ConnectorPoint PointX="3.2434902083333337" PointY="11.115641109212239" />
-          <ConnectorPoint PointX="3.3619804166666665" PointY="11.115641109212239" />
-          <ConnectorPoint PointX="3.5286470833333334" PointY="11.115641109212239" />
-          <ConnectorPoint PointX="6" PointY="11.115641109212239" />
+          <ConnectorPoint PointX="2.25" PointY="11.147528877563477" />
+          <ConnectorPoint PointX="3.0768235416666667" PointY="11.147528877563477" />
+          <ConnectorPoint PointX="3.2434902083333337" PointY="11.147528877563477" />
+          <ConnectorPoint PointX="3.3619804166666665" PointY="11.147528877563477" />
+          <ConnectorPoint PointX="3.5286470833333334" PointY="11.147528877563477" />
+          <ConnectorPoint PointX="6.25" PointY="11.147528877563477" />
         </AssociationConnector>
         <AssociationConnector Association="MOVIEADVISORModel.FK_MOVIES_PERSONS_ROLES_MOVIES" ManuallyRouted="false">
           <ConnectorPoint PointX="2.25" PointY="11.492668432210285" />
@@ -945,14 +951,14 @@
           <ConnectorPoint PointX="6" PointY="1.7401432291666659" />
         </AssociationConnector>
         <AssociationConnector Association="MOVIEADVISORModel.FK_MOVIES_COMMENTS_MOVIES_COMMENTS" ManuallyRouted="false">
-          <ConnectorPoint PointX="6.5319230769230767" PointY="11.566793619791664" />
-          <ConnectorPoint PointX="6.5319230769230767" PointY="11.816793619791664" />
-          <ConnectorPoint PointX="6.9784615384615378" PointY="11.816793619791664" />
-          <ConnectorPoint PointX="6.9784615384615378" PointY="11.566793619791664" />
+          <ConnectorPoint PointX="6.7819230769230767" PointY="12.134095052083332" />
+          <ConnectorPoint PointX="6.7819230769230767" PointY="12.384095052083332" />
+          <ConnectorPoint PointX="7.2284615384615378" PointY="12.384095052083332" />
+          <ConnectorPoint PointX="7.2284615384615378" PointY="12.134095052083332" />
         </AssociationConnector>
         <AssociationConnector Association="MOVIEADVISORModel.FK_MOVIES_COMMENTS_USERS" ManuallyRouted="false">
-          <ConnectorPoint PointX="5.25" PointY="9.7449446614583337" />
-          <ConnectorPoint PointX="6" PointY="9.7449446614583337" />
+          <ConnectorPoint PointX="5.25" PointY="9.9324446614583337" />
+          <ConnectorPoint PointX="6.25" PointY="9.9324446614583337" />
         </AssociationConnector>
         <AssociationConnector Association="MOVIEADVISORModel.FK_MOVIES_PERSONS_ROLES_PERSONS" ManuallyRouted="false">
           <ConnectorPoint PointX="2.25" PointY="5.7112939453125" />

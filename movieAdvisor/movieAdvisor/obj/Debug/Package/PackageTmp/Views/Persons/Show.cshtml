@@ -1,0 +1,164 @@
+﻿@model movieAdvisor.Models.PersonShow
+
+@{
+    if (Roles.IsUserInRole(User.Identity.Name, "admin"))
+    {
+        Layout = Url.Content("../Shared/_AdminLayout.cshtml");
+    }
+    ViewBag.Title = Model.person.NAME;
+}
+
+<table width="100%">
+        <tr>
+            <td width="100%" align="center">
+                <div class="editor-label" style="display:inline">
+                    <h2 style="display:inline">@Model.person.NAME</h2>
+                    @{
+                        if (Roles.IsUserInRole(User.Identity.Name,"admin"))
+                        {
+                            @Html.ActionLink("[Изменить]", "AddPerson", new { id = Model.person.ID })
+                        }
+                        if (Roles.IsUserInRole(User.Identity.Name,"admin"))
+                        {
+                            @Html.ActionLink(" [Удалить]", "DelPerson", new { id = Model.person.ID })
+                        }
+                    }
+                </div>
+            </td>
+        </tr>
+    </table>
+    <table width="100%">
+        <tr>
+            <td width="90%" valign="top">
+                <table width="100%" valign="top">
+                    <tr valign="top">
+                        <td width="20%" align="center">
+                            <div class="editor-poster" >
+                                @{
+                                    @:<img id="poster" src="@Url.Content("~/Uploads/" + Model.poster)"/ width="185" height="273" alt="@Model.altPoster">
+                                }
+                            </div>
+                        </td>
+                        <td width="80%">
+                            <div class="editor-description">
+                                <p>
+                                    Описание:
+                                </p>
+                                <p>
+                                    @Model.person.DESCRIPTION
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        Фото:
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                    <td colspan=2 align="center">
+                        <div class="editor-glarey" style="display:inline" >
+                            @{
+                                foreach(var pic in Model.picturesList)
+                                {
+                                    <div class="editor-photo" style="display:inline" >
+                                       <img id="photo" src="@Url.Content("~/Uploads/" + pic.PATH)"/ width="160" height="120" alt="@pic.TITLE">                          
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Отзывы:
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <td colspan=2 width="100%">
+                            <table width="100%">
+                                @{
+                                    foreach(var comment in Model.comments)
+                                    {
+                                       <tr>
+                                           <td valign="top">
+                                               @comment.USERS.USERNAME
+                                           </td>
+                                           <td width="100%">
+                                               <table width="100%">
+                                                   <tr>
+                                                       <td width="100%">
+                                                       Дата:
+                                                       </td>
+                                                   </tr>
+                                                   <tr>
+                                                       <td>
+                                                       @comment.TEXT
+                                                       </td>
+                                                   </tr>
+                                               </table>
+                                           </td>
+                                       </tr> 
+                                    }
+                                }
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="100%" colspan=2 align=center>
+                            @{
+                                if (User.Identity.IsAuthenticated)
+                                {
+                                    using (Html.BeginForm("AddComment", "Persons", FormMethod.Get ,new { width = "100%" }))
+                                    {
+                                        @:Оставить отзыв:
+                                        <textarea rows="5" id = "commentText" name="commentText" style="width:100%"></textarea>
+                                        <br />
+                                        <input type=hidden id = "personId" name="personId" value=@(Model.person.ID) />
+                                        <input type=submit title="Оставить" align="right" />
+                                    }
+                                }
+                                else
+                                {
+                                    @:Что-бы оставить отзыв, авторизируйтесь.
+                                }
+                            }
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td width="10%" align="center" valign="top">
+                <div class="editor-persons">
+                    @{
+                        if (Model.moviesList.Count > 1)
+                        {
+                            <div class="editor-label">
+                                 Фильмы:
+                            </div>
+                        }
+                        else
+                        if (Model.moviesList.Count > 0)
+                        {
+                            <div class="editor-label">
+                                    Фильм:
+                            </div>
+                        }
+
+                        foreach (var movie in Model.moviesList)
+                        {
+                            <div class="editor-poster" >
+                                @{
+                                    @:<img id="person" src="@Url.Content("~/Uploads/" + movie.picture.PATH)"/ width="90" height="130" alt="@movie.picture.TITLE">
+                                }
+                            </div>
+                            <div class="editor-label">
+                                 @Html.ActionLink(movie.movie.TITLE, "Show", "Movies", new { id = movie.movie.ID }, null)
+                            </div>
+                        }
+
+                       
+                    }
+                </div>
+            </td>
+        </tr>
+    </table>

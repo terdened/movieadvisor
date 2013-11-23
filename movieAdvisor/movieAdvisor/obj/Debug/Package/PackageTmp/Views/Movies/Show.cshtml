@@ -1,0 +1,147 @@
+﻿@model movieAdvisor.Models.MovieShow
+
+@{
+    if(Roles.IsUserInRole(User.Identity.Name,"admin"))
+    {
+        Layout = Url.Content("../Shared/_AdminLayout.cshtml");
+    }
+    ViewBag.Title = Model.movie.TITLE;
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('poster').click(function () {
+            echo('hi');
+            var o = $(this).parent();
+            var url = o.find('img').attr('src');
+            var html = '<a href="#" class="clone"><img src="' + url + '" /></a>'
+            o.append(html);
+            o = o.find('.clone');
+            o.animate({ width: '200%', height: '200%' });
+            o.click(function () {
+                $(this).remove();
+            });
+        });
+    });
+</script>
+
+<table width="100%">
+        <tr>
+            <td width="100%" align="center">
+                <div class="editor-label" style="display:inline">
+                    <h2 style="display:inline">@Model.movie.TITLE</h2>
+                    @{
+                        if (Roles.IsUserInRole(User.Identity.Name,"admin"))
+                        {
+                            @Html.ActionLink(" [Изменить]", "AddMovie", new { id = Model.movie.ID })
+                        }
+                        if (Roles.IsUserInRole(User.Identity.Name,"admin"))
+                        {
+                            @Html.ActionLink(" [Удалить]", "DelMovie", new { id = Model.movie.ID })
+                        }
+                    }
+                </div>
+            </td>
+        </tr>
+    </table>
+    <table width="100%">
+        <tr>
+            <td width="90%" valign="top">
+                <table width="100%" valign="top">
+                    <tr valign="top">
+                        <td width="20%" align="center">
+                            <div class="editor-poster" >
+                                @{
+                                    @:<img id="poster" src="@Url.Content("~/Uploads/" + Model.poster)"/ width="185" height="273" alt="@Model.altPoster">
+                                }
+                            </div>
+                        </td>
+                        <td width="80%">
+                            <div>
+                                @Html.Partial("Show/_GenresList")
+                            </div>
+                            <div class="editor-description">
+                                <p>
+                                    Описание:
+                                </p>
+                                <p>
+                                    @Model.movie.DESCRIPTION
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        Кадры из фильма:
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                    <td colspan=2 align="center">
+                        @Html.Partial("Show/_PhotosList")
+                    </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Отзывы:
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <td colspan=2 width="100%">
+                            <table width="100%">
+                                @{
+                                    foreach (var comment in Model.comments)
+                                    {
+                                       <tr>
+                                           <td valign="top">
+                                               @comment.USERS.USERNAME
+                                           </td>
+                                           <td width="100%">
+                                               <table width="100%">
+                                                   <tr>
+                                                       <td width="100%">
+                                                       Дата:
+                                                       </td>
+                                                   </tr>
+                                                   <tr>
+                                                       <td>
+                                                       @comment.TEXT
+                                                       </td>
+                                                   </tr>
+                                               </table>
+                                           </td>
+                                       </tr> 
+                                    }
+                                }
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="100%" colspan=2 align=center>
+                            @{
+                                if (User.Identity.IsAuthenticated)
+                                {
+                                    using (Html.BeginForm("AddComment", "Movies", FormMethod.Get, new { width = "100%" }))
+                                    {
+                                        @:Оставить отзыв:
+                                        <textarea rows="5" id = "commentText" name="commentText" style="width:100%"></textarea>
+                                        <br />
+                                        <input type=hidden id = "movieId" name="movieId" value=@(Model.movie.ID) />
+                                        <input type=submit title="Оставить" align="right" />
+                                    }
+                                }
+                                else
+                                {
+                                    @:Что-бы оставить отзыв, авторизируйтесь.
+                                }
+                            }
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td width="10%" align="center" valign="top">
+                <div class="editor-persons">
+                     @Html.Partial("Show/_PersonsList")
+                </div>
+            </td>
+        </tr>
+    </table>

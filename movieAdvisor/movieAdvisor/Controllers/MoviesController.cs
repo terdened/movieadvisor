@@ -82,6 +82,14 @@ namespace movieAdvisor.Controllers
             return View(model);
         }
 
+        public ActionResult respond(int id, int prewId)
+        {
+            MOVIEADVISOREntities6 entities = new MOVIEADVISOREntities6();
+            ViewBag.prewComment = entities.MOVIES_COMMENTS.Where(mc => mc.ID == prewId).First();
+            MovieShow model = new MovieShow(entities.MOVIES.Where(m => m.ID == id).FirstOrDefault());
+            return View("Show",model);
+        }
+
         [HttpGet]
         public ActionResult Find(int genre = 0)
         {
@@ -160,7 +168,7 @@ namespace movieAdvisor.Controllers
             return View("Find",model);
         }
 
-        public ActionResult AddComment(string commentText, int movieId)
+        public ActionResult AddComment(string commentText, int movieId, int prevComment=0)
         {
             MOVIEADVISOREntities6 entities = new MOVIEADVISOREntities6();
             MOVIES_COMMENTS tempComment = new MOVIES_COMMENTS();
@@ -169,6 +177,11 @@ namespace movieAdvisor.Controllers
             tempComment.TEXT = commentText;
             tempComment.USER_ID = entities.USERS.Where(u => u.USERNAME == User.Identity.Name).First().ID;
             tempComment.MARK = 10;
+            tempComment.DATE = DateTime.Now;
+
+            if (prevComment>0)
+                tempComment.PREV_COMMENT_ID = prevComment;
+
             tempComment.ID = entities.MOVIES_COMMENTS.OrderByDescending(mc=>mc.ID).First().ID+1;
             entities.MOVIES_COMMENTS.AddObject(tempComment);
             entities.SaveChanges();
@@ -287,7 +300,6 @@ namespace movieAdvisor.Controllers
             return View(model);
         }
 
-        
         public ActionResult DelMovie(int id = 0)
         {
 

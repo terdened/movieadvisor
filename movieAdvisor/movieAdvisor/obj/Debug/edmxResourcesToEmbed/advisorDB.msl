@@ -22,6 +22,7 @@
     <EntitySetMapping Name="MOVIES_COMMENTS">
       <EntityTypeMapping TypeName="MOVIEADVISORModel.MOVIES_COMMENTS">
         <MappingFragment StoreEntitySet="MOVIES_COMMENTS">
+          <ScalarProperty Name="DATE" ColumnName="DATE" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="TEXT" ColumnName="TEXT" />
           <ScalarProperty Name="MARK" ColumnName="MARK" />
@@ -52,6 +53,7 @@
     <EntitySetMapping Name="PERSONS_COMMENTS">
       <EntityTypeMapping TypeName="MOVIEADVISORModel.PERSONS_COMMENTS">
         <MappingFragment StoreEntitySet="PERSONS_COMMENTS">
+          <ScalarProperty Name="DATE" ColumnName="DATE" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="TEXT" ColumnName="TEXT" />
           <ScalarProperty Name="MARK" ColumnName="MARK" />

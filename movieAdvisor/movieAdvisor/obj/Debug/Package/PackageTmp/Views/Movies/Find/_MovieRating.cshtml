@@ -1,0 +1,55 @@
+﻿@model movieAdvisor.Models.MoviesListItem
+
+<div style="display:inline">
+                    Ваша оценка:
+                </div>
+                <div> 
+                    @if (User.Identity.Name != "")
+                    {
+                        if (Model.isRaited == false)
+                        {
+                            @:<input name=@("star" + Model.movie.ID) type="radio" class="auto-submit-star" value=@(Model.movie.ID + "/1") title="Неудовлетворительно"/>
+                            @:<input name=@("star" + Model.movie.ID) type="radio" class="auto-submit-star" value=@(Model.movie.ID + "/2") title="Почти удовлетворительно"/>
+                            @:<input name=@("star" + Model.movie.ID) type="radio" class="auto-submit-star" value=@(Model.movie.ID + "/3") title="Почти удовлетворительно"/>
+                            @:<input name=@("star" + Model.movie.ID) type="radio" class="auto-submit-star" value=@(Model.movie.ID + "/4") title="Удовлетворительно"/>
+                            @:<input name=@("star" + Model.movie.ID) type="radio" class="auto-submit-star" value=@(Model.movie.ID + "/5") title="Весьма удовлетворительно"/>
+                            @:<input name=@("star" + Model.movie.ID) type="radio" class="auto-submit-star" value=@(Model.movie.ID + "/6") title="Почти хорошо"/>
+                            @:<input name=@("star" + Model.movie.ID) type="radio" class="auto-submit-star" value=@(Model.movie.ID + "/7") title="Хорошо"/>
+                            @:<input name=@("star" + Model.movie.ID) type="radio" class="auto-submit-star" value=@(Model.movie.ID + "/8") title="Очень хорошо"/>
+                            @:<input name=@("star" + Model.movie.ID) type="radio" class="auto-submit-star" value=@(Model.movie.ID + "/9") title="Почти отлично"/>
+                            @:<input name=@("star" + Model.movie.ID) type="radio" class="auto-submit-star" value=@(Model.movie.ID + "/10") title="Отлично" />
+                        }
+                        else
+                        {
+                            for (int i = 1; i <= 10; i++ )
+                            {
+                                if (Model.yourMark == i)
+                                {
+                                    @:<input name=@("star" + Model.movie.ID) type="radio" class="star" disabled="disabled" checked="checked"/>
+                                }
+                                else
+                                {
+                                    @:<input name=@("star" + Model.movie.ID) type="radio" class="star" disabled="disabled"/>
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        @:Для голосования, авторизируйтесь
+                    }
+                
+                   <script>
+                       $('.auto-submit-star').rating({
+                           callback: function (value, link) {
+                               $.get(
+                                    "UpdateRatingFind",
+                                    { value: value, keyWord: "", genre: 0, year: 0 },
+                                    function () {
+                                        location.reload();
+                                    }
+                                );
+                           }
+                       });
+                    </script>
+                </div>
